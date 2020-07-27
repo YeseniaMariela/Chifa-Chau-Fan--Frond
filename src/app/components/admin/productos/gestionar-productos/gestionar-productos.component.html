@@ -1,0 +1,136 @@
+<div class="row">
+    <div class="col-12 pt-2 mt-4">
+      <div class="card">
+        <div class="card-header">
+          Productos
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-6">
+              <div class="col-6 text-center">
+                <h5>Registrar Productos</h5>
+              </div>
+              <form [formGroup] ="formProducto" enctype="multipart/form-data">
+                <div class="row">
+                  <!-- para crear el producto -->
+                  <ng-template [ngIf]="!producto">
+                    <div class="col-12 mb-2">
+                      <label for="nombre">Nombre</label>
+                      <input formControlName="nombre" type="text" class="form-control"  name="nombre" placeholder="Producto" required> <br>
+                      <label for="descripcion">Descripción</label>
+                      <textarea formControlName="descripcion" name="descripcion" class="form-control" cols="30" rows="2" style="resize: none;" placeholder="Describa el producto brevemente"></textarea>
+                    </div>
+                    <div class="col-12 mb-2">
+                      <label for="categoriaId">Categoria</label>
+                      <select formControlName="categoriaId" name="categoria" [(ngModel)]="seleccionDefecto" class="form-control" required>
+                        <option [ngValue]="0" disabled>Seleccione una Categoria</option>
+                        <option *ngFor="let categoria of categoriasProducto" [value]="categoria.id">{{categoria.nombre | uppercase}}</option>
+                      </select>
+                    </div>
+                    <div class="col-12 mb-2">
+                      <label for="precioUnidad">Precio Unidad</label>
+                      <input formControlName="precioUnidad" type="number" name="precioUnidad" id="" class="form-control" placeholder="0.00" required>
+                    </div>
+    
+                    <div class="col-12 mb-2">
+                      <label for="image">Imagen</label> <br>
+                      <input type="file" (change)="onFileChange($event)" enctype="multipart/form-data" 
+                      (ngValue)="urlImagen" required>
+                      <!-- <div class="row">
+                        <div class="col-5">
+                          <img width="100" height="60" src="http://localhost:8080/static/products/{{newProduct.photo}}" alt="">
+                        </div>
+                        <div class="col-7">
+                          <button class="btn btn-danger" (click)="deletePhoto()"><i class="fa fa-times"></i>&nbsp;Eliminar Foto</button>
+                        </div>
+                      </div> -->
+                    </div>
+                  </ng-template>
+                  <!-- fin-->
+                  <!-- para actualizar el producto -->
+                  <ng-template [ngIf]="producto">
+                    <div class="col-12 mb-2">
+                      <label for="nombre">Nombre</label>
+                      <input  [value]="producto.nombre" formControlName="nombre" type="text" class="form-control"  name="nombre" placeholder="Producto" required> <br>
+                      <label for="descripcion">Descripción</label>
+                      <textarea [value]="producto.descripcion" formControlName="descripcion" name="descripcion" class="form-control" cols="30" rows="2" style="resize: none;" placeholder="Describa el producto brevemente"></textarea>
+                    </div>
+                    <div class="col-12 mb-2">
+                      <label for="categoriaId">Categoria</label>
+                      <select formControlName="categoriaId" name="categoria" [(ngModel)]="seleccionDefecto" class="form-control" required>
+                        <option [ngValue]="0" disabled>Seleccione una Categoria</option>
+                        <option *ngFor="let categoria of categoriasProducto" [value]="categoria.id">{{categoria.nombre | uppercase}}</option>
+                      </select>
+                    </div>
+                    <div class="col-12 mb-2">
+                      <label for="precioUnidad">Precio Unidad</label>
+                      <input  [value]="producto.precioUnidad" formControlName="precioUnidad" type="number" name="precioUnidad" id="" class="form-control" placeholder="0.00" required>
+                    </div>
+    
+                    <div class="col-12 mb-2">
+                     
+                      <ng-template [ngIf]="!valor">
+                        <div class="row">
+                          <label for="image">Imagen</label> <br>
+                          <div class="col-5">
+                            <img width="100" height="60" [src]="producto.imagen" alt="">
+                          </div>
+                          <div class="col-7">
+                            <button class="btn btn-danger" (click)="cambiarValor()"><i class="fa fa-times"></i>&nbsp;Cambiar Foto</button>
+                          </div>
+                        </div>
+                      </ng-template>
+                      <ng-template [ngIf]="valor">
+                        <label for="imagen" >Imagen - Subir imagen</label><br>
+                        <p>Por favor suba una imagen nueva</p><br>
+                        <input type="file" (change)="onFileChangeV($event)" enctype="multipart/form-data" 
+                        (ngValue)="urlImagen" required>
+                        <div class="col-7">
+                          <button class="btn btn-danger" (click)="cambiarValor()"><i class="fa fa-times"></i>&nbsp;Cancelar</button>
+                        </div>
+                      </ng-template>    
+                    </div>
+                  </ng-template>
+                  <!-- fin-->
+                  <div class="col-12 mb-2 text-center">
+                    <button class="btn btn-danger mr-5" (click)="cancelarEdicion()" *ngIf="producto">
+                      <i class="fa fa-times"></i>&nbsp;Cancelar Edición
+                    </button>
+                    <button class="btn btn-success" (click)="subirImagenActualizar()" *ngIf="producto">
+                      <i class="fa fa-check"></i>&nbsp;Terminar Edición
+                    </button>
+                    <button class="btn btn-primary" (click)="subirImagen()" *ngIf="!producto">
+                      <i class="fa fa-save"></i>&nbsp;Guardar Producto
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="col-6">
+              <div class="col-6 text-center">
+                <h5>Listado de Productos</h5>
+              </div>
+              <ul class="list-group" style="max-height: 400px; overflow: auto;">
+                <li class="list-group-item" *ngFor="let producto of productos; let index = index">
+                  <div class="row">
+                    <div class="col-4">
+                      <img [src]="producto.imagen" style="width: 80px; height: 80px;" alt="{{producto.nombre}}">
+                    </div>
+                    <div class="col-4">
+                      {{producto.nombre | uppercase}} <br>
+                      <span class="badge badge-danger">{{producto.precioUnidad | number:'1.2-2'}}</span>
+                    </div>
+                    <div class="col-4">
+                      <button class="btn btn-primary mr-3" (click)="obtenerProductos(producto.id)"><i class="fas fa-pencil-alt"></i></button>
+                      <button class="btn btn-danger" (click)="eliminarProducto(producto.id)"><i class="fa fa-trash"></i></button>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

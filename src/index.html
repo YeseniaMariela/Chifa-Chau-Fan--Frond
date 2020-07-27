@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Chifa Chau Fan</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <link rel="icon" type="image/x-icon" href="favicon.ico"> -->
+  <link rel="icon" type="image/png" href="./assets/images/logo.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"> 
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <app-root></app-root>
+  <script src="https://checkout.culqi.com/js/v3"></script>
+  <script>
+    function culqi(){
+      if(Culqi.token) {
+        var token = Culqi.token;
+        var payment_event = new CustomEvent ('payment_event', {detail: token});
+        document.dispatchEvent (payment_event);
+
+      }
+    };
+</script>
+<script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
+</body>
+
+
+</html>
+ 

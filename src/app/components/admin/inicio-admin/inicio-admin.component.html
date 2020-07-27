@@ -1,0 +1,114 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-md-2 menu" style="background-color:#fff">
+            <div>
+                <a class="navbar-brand" [routerLink]="['/welcome']">
+                    <img src="assets/logo.png" width="194" height="51" class="d-inline-block align-top" alt="Chifa Chau fan">
+                </a>
+                <hr>
+            </div>
+            <div class="text-left pt-4"  >
+                <ul>
+                    <li class=" mt-5">
+                        <h4 >
+                            Reservas
+                        </h4>
+                        <div class="pt-3">
+                            <a routerLink="reservas">
+                                <i class="fa fa-calendar" ></i><span class="pl-3">Detalles Reservas</span>
+                            </a>
+                        </div >
+                    </li>
+                    <li class=" mt-4">
+                        <h4>
+                            Productos
+                        </h4>
+                        <div class="pt-3">
+                            <a routerLink="categorias" routerLinkActive="active-link">
+                                <i class="fas fa-grip-vertical"></i> <span class="pl-3" >Categorias</span>
+                            </a>
+                        </div>
+                        <div class="pt-3">
+                            <a routerLink="productos" routerLinkActive="active-link">
+                                <i class="fas fa-utensils"></i> <span class="pl-3" >Gestionar Productos</span>
+                            </a>
+                        </div>
+                    </li>
+    
+                    <!-- <div class="pt-3">
+                        <span>
+                            Productos
+                        </span>
+                        <li class="pt-3">
+                            <a [routerLink]="['product']">
+                                <i class="fa fa-cutlery"></i>
+                                <span   class="ml-3">Gestionar Productos</span>
+                            </a>
+                        </li>
+                    </div> -->
+                    <li class=" mt-4">
+                        <h4>
+                            Mesas
+                        </h4>
+                        <div class="pt-3">
+                            <a routerLink="mesas">
+                                <i class="fa fa-table"></i> <span class="pl-3">Gestionar Mesas</span>
+                            </a>
+                        </div>
+                    </li>
+                    <li class=" user mt-4" >
+                        <h4>
+                            Usuarios
+                        </h4>
+                        <div class="pt-3">
+                            <a routerLink="usuarios">
+                                <i class="fa fa-user"></i> <span class="pl-3"> Gestionar Usuarios</span>
+                            </a>
+                        </div>
+                    </li>
+                    <li class=" reports mt-4">
+                        <h4>
+                            Reportes
+                        </h4>
+                        <div class="pt-3">
+                            <a routerLink="reportes">
+                                <i class="fas fa-chart-line"></i> <span class="pl-3">Todos los reportes</span>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+        </div>     
+        <div class="col-md-10" id="cabecera" style="background-color: #fff; height: 70px;opacity: 0.9;">
+            <div class="dropdown" style="display: block; margin-top: 10px;" >
+                <ng-template [ngIf]="!usuarioLogueado">
+                    <button class="dropbtn" style="display: block;margin-left: auto;"><i class="fa fa-user-circle"  aria-hidden="true" style="color: black; font-size: 20px;"></i></button>
+                </ng-template>
+                <ng-template [ngIf]="usuarioLogueado">         
+                    <button class="dropbtn"  style="color:black; display: block;margin-left: auto;">{{usuarioLogueado.nombre}} {{usuarioLogueado.apellidos}}<i class="fa fa-user-circle"  aria-hidden="true" style="color: black; font-size: 20px; padding-left: 7px;"></i></button>
+                </ng-template>      
+    
+                <div class="dropdown-content">
+                    <ng-template [ngIf]="!usuarioLogueado">
+                        <a href="#"><i class="fa fa-user  mr-2"></i>Iniciar Sesion</a>
+                        <a class=" hand"  (click)="cerrarSesion()" ><i class="fa fa-power-off  mr-2"></i>Cerrar Sesion</a>
+                    </ng-template>
+                    <ng-template [ngIf]="usuarioLogueado">            
+                        <a class=" hand"  (click)="cerrarSesion()" ><i class="fa fa-power-off  mr-2"></i>Cerrar Sesion</a>
+                    </ng-template>      
+        
+                </div>
+              </div>
+            <div class="row">
+                <div class="col-md-12 mb-5" style=" margin-top: 55px;">
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    
+    
+    

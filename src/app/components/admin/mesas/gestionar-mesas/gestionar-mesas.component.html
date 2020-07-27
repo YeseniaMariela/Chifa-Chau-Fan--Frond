@@ -1,0 +1,140 @@
+<div class="col-12 pt-3 mt-4">
+    <div class="card">
+      <div class="card-header">
+        Mesas
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-6">
+            <div class="col-6 text-center">
+                <h5>Registrar Mesa</h5>
+            </div>
+            <ul class="list-group">
+              <li class="list-group-item">
+                <form [formGroup] ="formMesa" enctype="multipart/form-data">
+                  <div class="form-row">
+                    <ng-template [ngIf]="!mesa">
+                        <div class="col-8">
+                            <label for="tipoDoc">Numero de mesa</label>
+                            <input formControlName="numeroMesa" type="text" name="numeroMesa" placeholder="Mesa xx" class="form-control form-control-sm text-uppercase" required>
+                        </div>
+                        <div class="col-4">
+                            <label for="tipoDoc">Capacidad Mesa</label>
+                            <input formControlName="capacidad" type="number" name="capacidad" id="" placeholder="00" class="form-control form-control-sm text-uppercase" required>
+                        </div>
+                        <div class="col-12 mb-2 mt-2">
+                            <label for="tipoDoc">Estado de la Mesa</label>
+                            <select class="form-control"  formControlName="estado">
+                                <option value="" disabled>Seleccione un Estado</option>
+                                <option value ="LIBRE">Libre</option>
+                                <option value ="OCUPADO">Ocupado</option>
+                            </select>               
+                        </div>
+                        <div class="col-12 mb-2 mt-2">
+                            <label for="image">Imagen</label> <br>
+                            <input type="file" (change)="onFileChange($event)" enctype="multipart/form-data" 
+                            (ngValue)="urlImagen" required>
+                        </div>
+                    </ng-template>
+                    <ng-template [ngIf]="mesa">
+                        <div class="col-10">
+                            <input [value]="mesa.numeroMesa" formControlName="numeroMesa" type="text" name="numeroMesa" placeholder="Mesa xx" class="form-control form-control-sm text-uppercase" required>
+                        </div>
+                        <div class="col-2">
+                            <input [value]="mesa.capacidad" formControlName="capacidad" type="number" name="capacidad" id="" placeholder="00" class="form-control form-control-sm text-uppercase" required>
+                        </div>
+                        <div class="col-12 mb-2 mt-2">
+                            <label for="tipoDoc">Estado de la Mesa</label>
+                            <select  [value]="mesa.estado" class="form-control"  formControlName="estado">
+                                <option value="" disabled>Seleccione un Estado</option>
+                                <option value ="LIBRE">Libre</option>
+                                <option value ="OCUPADO">Ocupado</option>
+                            </select>               
+                        </div>
+                        <div class="col-12 mb-2 mt-2">
+                            <ng-template [ngIf]="!valor">
+                                <div class="row">
+                                  <label for="image">Imagen</label> <br>
+                                  <div class="col-5">
+                                    <img width="100" height="60" [src]="mesa.imagen" alt="">
+                                  </div>
+                                  <div class="col-7">
+                                    <button class="btn btn-danger" (click)="cambiarValor()"><i class="fa fa-times"></i>&nbsp;Cambiar Foto</button>
+                                  </div>
+                                </div>
+                              </ng-template>
+                              <ng-template [ngIf]="valor">
+                                <label for="imagen" >Imagen - Subir imagen</label><br>
+                                <p>Por favor suba una imagen nueva</p><br>
+                                <input type="file" (change)="onFileChangeV($event)" enctype="multipart/form-data" 
+                                (ngValue)="urlImagen" required>
+                                <div class="col-7">
+                                  <button class="btn btn-danger" (click)="cambiarValor()"><i class="fa fa-times"></i>&nbsp;Cancelar</button>
+                                </div>
+                              </ng-template> 
+                        </div>
+                    </ng-template>
+  
+                        
+
+                    <div class="col-12 text-center">
+                      <button class="btn btn-danger btn-sm mr-5" (click)="cancelarEdicion()" *ngIf="mesa">
+                        <i class="fa fa-times"></i>&nbsp;Cancelar Edición
+                      </button>
+                      <button class="btn btn-success btn-sm"  *ngIf="mesa" (click)="subirImagenActualizar()">
+                        <i class="fa fa-pencil"></i>&nbsp;Terminar Edición
+                      </button>
+                      <button class="btn btn-primary btn-sm "  *ngIf="!mesa" (click)="subirImagen()">
+                        <i class="fa fa-save"></i>&nbsp;Guardar
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </li>
+            </ul>
+          </div>
+          <div class="col-6">
+            <div class="col-6 text-center">
+                <h5>Listado de Mesa</h5>
+            </div>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-4">
+                          <p style="margin-bottom: 0px;">Imagen</p>
+                        </div>
+                        <div class="col-2">
+                          N°&nbsp;
+                        </div>
+                        <div class="col-3">
+                            Capacidad &nbsp;
+                        </div>
+    
+                    </div>
+                </li>
+              <li class="list-group-item" *ngFor="let mes of mesas; let index = index">
+                
+                <div class="row">
+                  <div class="col-4">
+                    <img width="150" height="80" [src]="mes.imagen" alt="">
+                  </div>
+                  <div class="col-2">
+                    {{mes.numeroMesa | uppercase}}&nbsp;
+                  </div>
+                  <div class="col-3">
+                    {{mes.capacidad}} &nbsp;
+                  </div>
+                  <div class="col-3 text-right">
+                    <button class="btn btn-primary mr-2" (click)="obtenerMesa(mes.numeroMesa)"><i class="fas fa-pencil-alt"></i></button>
+                    <button class="btn btn-danger" (click)="eliminarProducto(mes.id)"><i class="fa fa-trash"></i></button>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  

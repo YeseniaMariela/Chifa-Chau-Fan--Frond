@@ -1,0 +1,137 @@
+h2{
+    font-family: shanghai;
+    letter-spacing: 5pt;
+    font-size: 80px;   
+    text-shadow: 4px 0px 0px #9f3737, 4px 1px 0px #9f3737, 4px 0px 0px #9f3737, 4px -1px 0px #9f3737;
+}
+.img-hover-zoom {
+    /* height: 200px; */
+    overflow: hidden; 
+    border-radius: 10px;
+  }
+.img-hover-zoom img{
+    transition: transform .5s ease;
+    border-radius: 10px;
+}
+.img-hover-zoom:hover img{
+    transform: scale(1.2);   
+}
+
+.col-sm-7{text-align: center;
+letter-spacing: 2pt}
+
+.bienvenido{
+    font-size: 30px;
+    color: #a85454;
+    letter-spacing: 4pt;
+    font-family: Arial, sans-serif
+}
+
+/* ===================== MENU*/
+.buffets{
+  text-align: center;
+  font-size: 35px;
+  letter-spacing: 5pt;
+  color: #a85454;
+  text-transform: uppercase;
+}
+h4{
+  letter-spacing: 3pt;
+  font-family: shanghai;
+  font-size: 23px;
+}
+/* ======================== */
+h3{
+    font-size: 40px;
+    letter-spacing: 5pt;
+    text-transform: uppercase;
+    font-family: shanghai;
+    color: black;
+}
+p{
+ font-family: Arial, sans-serif;
+  text-align: justify;
+}
+a{
+    padding-bottom: 10px;
+    text-decoration: none;
+}
+
+.video video{
+  width: 100%;
+  height: 321px;
+  max-width: 450px;
+	border-radius: 15px 15px 15px 15px;
+}
+
+
+/* video prueba=== */
+/* #video, video{
+  width: 500px;
+  height: 300px;
+} */
+/* ============contacto */
+.contacto{
+    font-size: 20px;
+    font-weight: bolder;
+    text-transform: uppercase;
+    color: black;
+    margin-right: 20px;
+    font-family: shanghai;
+    letter-spacing: 5pt;
+}
+.btn{
+    letter-spacing: 3pt;
+    font-family: Arial, sans-serif;   
+}
+.btn:hover{
+    background-color: #a85454;
+    border: #a85454;
+}
+/* #butt :hover{
+    color: #a85454;
+} */
+
+/* h5{
+    color: black;
+} */
+
+
+/* =======cabecera y footer */
+
+
+  
+  
+  
+  .footer{
+      background: #222222;
+      color:white;
+    }
+  h4{
+    font-family: shanghai;
+    letter-spacing: 5pt;
+  }
+  p{
+    font-family: Arial,sans-serif;
+    letter-spacing: 3pt;
+    font-size: 13px;
+  }
+    .links  a :hover {
+        list-style-type:none;
+        color:#a85454;
+        transition: color .2s;
+        text-decoration:none;
+    }
+    a{
+      color: white;
+    }  
+    .about-company {
+      /* font-size: 15px; */
+      color:white;
+      transition: color .2s;
+   
+    }
+  
+    .location i {
+      font-size: 18px;
+    }

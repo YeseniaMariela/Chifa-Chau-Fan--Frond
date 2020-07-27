@@ -1,0 +1,39 @@
+<div class="row">
+    <div class="col-6 pt-2 mt-4 text-center" style="margin: auto;">
+      <div class="card">
+        <div class="card-header">
+          <h4>
+            Validar Token
+          </h4>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12">
+              <form [formGroup] ="formToken" enctype="multipart/form-data">
+                <div class="row">
+                  <!-- para crear la categoria -->
+                    <div class="col-8 mb-2 "  style="margin: auto;">
+                      <h6>Ingrese el código que se le envió a su correo</h6>
+                      <input formControlName="Token" type="text" class="form-control col-4"  style="margin: auto;"  maxlength="6" placeholder="Token" [(ngModel)]="texto" (ngModelChange)="limpiar($event)" required> <br>
+                    
+                      <small class="help-text text-danger"  *ngIf="emailExiste" >
+                        <i class="fa fa-times text-danger"></i>&nbsp;Token Incorrecto, Por favor vuelva a Ingresar el token</small>
+
+                    </div>
+                  <!-- fin-->
+                  <div class="col-12 mb-2 text-center">
+                    <button class="btn btn-success" (click)="validarToken()" >
+                      <i class="fa fa-check"></i>&nbsp;Validar Token
+                    </button>
+
+                  </div>
+                </div>
+              </form>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

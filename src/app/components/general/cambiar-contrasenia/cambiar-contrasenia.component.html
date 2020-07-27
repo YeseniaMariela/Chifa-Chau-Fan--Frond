@@ -1,0 +1,95 @@
+<div class="row">
+    <div class="col-6 pt-2 mt-4 text-center" style="margin: auto;">
+      <div class="card">
+        <div class="card-header">
+          <h4>
+            Cambio de Contraseña
+          </h4>
+        </div>
+        <div class="card-body" *ngIf="!existeUsuario">
+          <div class="row">
+            <div class="col-12">
+              <form [formGroup] ="formToken" enctype="multipart/form-data">
+                <div class="row">
+                  <!-- para crear la categoria -->
+                    <div class="col-10 mb-2 "  style="margin: auto;">
+                      <h6>Ingrese su Correo o Usuario para validar los Datos</h6>
+                      <input formControlName="Token" type="text" class="form-control col-4"  style="margin: auto;" id="nombre" name="name" placeholder="Correo O Usuario" required> <br>
+                    </div>
+                  <!-- fin-->
+                  <div class="col-12 mb-2 text-center">
+                    <button class="btn btn-success" (click)="validarExistenciaUsuario()" >
+                      <i class="fa fa-check"></i>&nbsp;Cambiar Contraseña
+                    </button>
+
+                  </div>
+                </div>
+              </form>
+            </div>
+            
+          </div>
+        </div>
+        <div class="card-body" *ngIf="tokenValid">
+            <div class="row">
+              <div class="col-12">
+                <form [formGroup] ="ingresoToken" enctype="multipart/form-data">
+                  <div class="row">
+                    <!-- para crear la categoria -->
+                      <div class="col-10 mb-2 "  style="margin: auto;">
+                        <h6>Ingrese el Código que se envio a su correo</h6>
+                        <input formControlName="Token" type="text" class="form-control col-4"  style="margin: auto;" id="nombre" name="name" maxlength="6" placeholder="Token" required> <br>
+                      </div>
+                    <!-- fin-->
+                    <div class="col-12 mb-2 text-center">
+                      <button class="btn btn-success" (click)="validarCodigo()" >
+                        <i class="fa fa-check"></i>&nbsp;Validar Código
+                      </button>
+  
+                    </div>
+                  </div>
+                </form>
+              </div>
+              
+            </div>
+        </div>
+        <div class="card-body" *ngIf="validarContra">
+        <div class="row">
+            <div class="col-12">
+            <form [formGroup] ="formcontras" enctype="multipart/form-data">
+                <div class="row">
+                <!-- para crear la categoria -->
+                    <div class="col-10 mb-2 "  style="margin: auto;">
+                    <h6>Ingrese su contraseña anterior</h6>
+                    <input formControlName="contraAnterior" type="password" class="form-control col-4"  style="margin: auto;" id="nombre" name="name" maxlength="6" placeholder="Contraseña Anterio" required> <br>
+                    </div>
+                <!-- fin-->
+                <!-- para crear la categoria -->
+                <div class="col-10 mb-2 "  style="margin: auto;">
+                    <h6>Ingrese su nueva contraseña</h6>
+                    <input formControlName="contraActu" type="password" class="form-control col-4"  style="margin: auto;" id="nombre" name="name" maxlength="6" placeholder="Nueva Contraseña" required> <br>
+                    </div>
+                <!-- fin-->
+                <!-- para crear la categoria -->
+                <div class="col-10 mb-2 "  style="margin: auto;">
+                    <h6>Repita la Nueva Contraseña</h6>
+                    <input formControlName="contraActu2" type="password" class="form-control col-4"  style="margin: auto;" id="nombre" name="name" maxlength="6" placeholder="Repita La contraseña" required> <br>
+                    </div>
+                <!-- fin-->
+                
+                <div class="col-12 mb-2 text-center">
+                    <button class="btn btn-success" (click)="cambiarContrasenia()" >
+                    <i class="fa fa-check"></i>&nbsp;Cambiar Contraseña
+                    </button>
+
+                </div>
+                </div>
+            </form>
+            </div>
+            
+        </div>
+        </div>
+    
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,390 @@
+<app-navbar></app-navbar>
+<div class="container-fluid">
+<div class="row">
+  <div class="col-12">
+    <carousel>
+      <slide *ngFor="let slide of slides">
+        <img src="assets/images/{{slide.image}}" alt="{{slide.alt}}" style="display: block; width: 100%;">
+        <div class="carousel-caption d-none d-md-block">
+          <h1>{{slide.title}}</h1>
+          <h2>{{slide.description}}</h2>
+
+          <ng-template [ngIf]="!userLoged">
+            <a class="btn btn-light text-info" (click)="openModal(template)">
+              <i class="fa fa-check"></i>&nbsp;Reservar
+            </a>  
+          </ng-template>
+          <ng-template [ngIf]="userLoged">
+            <a class="btn btn-light text-info" [routerLink]="['/reservation']">
+              <i class="fa fa-check"></i>&nbsp;Reservar
+            </a>  
+          </ng-template>
+        </div>
+      </slide>
+    </carousel>
+  </div>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-sm-7">
+        <span class="bienvenido">
+          Bienvenidos al 
+        </span>
+        <h3>Restaurante "Chifa Chau Fan"</h3>
+        <p>Todo empezó en el año 2010 cuando el Sr. Gastón Lopez empezó con un sueño emprendedor , abrir un pequeño local de comidas orientales .
+           Con un reducido comedor, un par de mesas, sillas empezó esta travesía</p>
+           <a href="about-us">Nuestra Historia de Superacion
+              <i class="fa fa-arrow-right ml-3" aria-hidden="true"></i>
+              
+           </a>
+           
+      </div>
+      <div class="col-sm-5">
+        <div class="img-hover-zoom img-hover-zoom--xyz">
+            <img src="assets/images/history1.png" style="width: 100%;" alt="">
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <p class="buffets pt-5 pb-3">
+    Buffets de Comida China
+  </p>
+<div class="card-deck mb-3 text-center">
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header" style="font-size: 10px;">
+      <h4>CHAUFA DE POLLO</h4>
+   </div>
+<img src="https://decomidaperuana.com/wp-content/uploads/2018/05/como-preparar-arroz-chaufa.jpg" style="width: 100%;">
+    <div class="card-body">
+      <h1 class="card-title pricing-card-title" style="color: #a85454; font-size: 25px;">S/ 8.00</h1>
+      <ul class="list-unstyled mt-3 mb-4">
+        <li style="text-align: justify; letter-spacing: 3pt;"> Nuestro clasico arroz chaufa a escoger de pollo, carne o Cerdo</li>
+      </ul>
+    </div>  
+  </div>
+
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header">
+      <h4>AEROPUERTO</h4>
+    </div>
+    <img src="assets/images/aeropuerto1.png" style="width: 100%;">
+    <div class="card-body">
+      <h1 class="card-title pricing-card-title" style="color: #a85454; font-size: 25px;">S/ 10.00</h1>
+      <ul class="list-unstyled mt-3 mb-4">
+        <li style="text-align: justify; letter-spacing: 3pt;">A su elección de la comida de Aeropuerto de pollo, carne o cerdo. </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header">
+      <h4>CHAUFA CON LOMO</h4>
+    </div>
+    <img src="assets/images/lomo1.jpg" style="width: 100%; height: 48%;">
+    <div class="card-body">
+      <h1 class="card-title pricing-card-title" style="color: #a85454; font-size: 25px;">S/ 11.00</h1>
+      <ul class="list-unstyled mt-3 mb-4">
+        <li style="text-align: justify; letter-spacing: 3pt;">Nuestro Chaufa con tallarín salteado de pollo, res o cerdo</li>
+      </ul>
+      
+    </div>
+  </div>
+
+</div>
+
+<div class="card-deck mb-3 text-center">
+<div class="card mb-4 shadow-sm">
+  <div class="card-header" style="font-size: 10px;">
+    <h4>CHAUFA CON PIÑA</h4>
+ </div>
+<img src="assets/images/pina.jpg" style="width: 100%;">
+  <div class="card-body">
+    <h1 class="card-title pricing-card-title" style="color: #a85454; font-size: 25px;">S/ 13.00</h1>
+    <ul class="list-unstyled mt-3 mb-4">
+      <li style="text-align: justify; letter-spacing: 3pt;">Nuestro sabroso pollo con piña acompañado de arroz chaufa de pollo o arroz blanco</li>
+    </ul>
+  </div>  
+</div>
+
+<div class="card mb-4 shadow-sm">
+  <div class="card-header">
+    <h4>CHAUFA CON CHIJAUKAY</h4>
+  </div>
+  <img src="assets/images/chijaukay.jpg" style="width: 100%; height: 42%;">
+  <div class="card-body">
+    <h1 class="card-title pricing-card-title" style="color: #a85454; font-size: 25px;">S/ 10.00</h1>
+    <ul class="list-unstyled mt-3 mb-4">
+      <li style="text-align: justify; letter-spacing: 3pt;">Nuestro delicioso pollo chijaukay acompañado de arroz chaufa de pollo o arroz blanco. </li>
+    </ul>
+  </div>
+</div>
+
+<div class="card mb-4 shadow-sm">
+  <div class="card-header">
+    <h4>TALLARIN DE POLLO</h4>
+  </div>
+  <img src="assets/images/tallarin.jpg" style="width: 100%; height: 40%;">
+  <div class="card-body">
+    <h1 class="card-title pricing-card-title" style="color: #a85454; font-size: 25px;">S/ 8.00</h1>
+    <ul class="list-unstyled mt-3 mb-4">
+      <li style="text-align: justify; letter-spacing: 3pt;">Nuestro delicioso tallarín de pollo salteado a gusto del cliente</li>
+    </ul>
+    
+  </div>
+</div>
+</div>
+
+</div>
+
+<!-- video -->
+<!-- <div class="video" >
+  <div class="col-12 text-center pt-5 pb-5">
+      <span class="bienvenido">
+        Disfruta de 
+      </span>
+      <h3>Nuestro Video</h3>
+    </div>
+    <video loop="loop" poster="assets/images/history1.jpg" width="100%"  controls="">
+      <source src="https://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
+      <source src="./static/media/fast-video.webm" type="video/webm">
+    </video>
+</div> -->
+
+<div class="container">
+  <div class="video">      
+    <div class="col-md-12 text-center pt-5 pb-5">
+      <span class="bienvenido">
+        Disfruta de 
+      </span>
+      <h3>Nuestro Video</h3>
+      <div class="row">
+        <div class="col-md-6 pt-5">
+          <iframe width="100%" height="315" src="https://www.youtube.com/embed/kQOCuuiyC40" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="col-md-6 pt-5">
+          <span style="font-weight: bold; font-size: 20px; letter-spacing: 3pt; font-family: Arial, sans-serif;">
+            BREVE DESCRIPCION <br>
+          </span>
+          <p class="pt-3" style="letter-spacing: 3pt;">
+            Disfruta de Nuestro video, daremos a conocer como inicio la empresa Chifa Chau Fan, que platillos ofrecemos a nuestros clientes,
+            cuales son nuestros anhelos como empresa, a la vez disfrutaras de como se realiza  el Arroz Chaufa sabiendo que son nuestras especialidades,
+            espero que les guste.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+    <!-- nosotros -->
+
+<div class="row">
+  <div class="col-12 text-center pt-5 pb-5">
+      <span class="contacto">Comunicate con Nosotros</span>
+      <a [routerLink]="['/contactenos']">
+        <button type="button" class="btn btn-dark" id="butt">Contactenos</button>
+      </a>    
+  </div>  
+</div>
+
+
+
+<ng-template #template>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-8 offset-2 text-center" >
+        <h3 class="display-3" style="font-size: 30px;" *ngIf="forgotPassword">Reiniciar contraseña</h3>
+        <div class="btn-group" role="group" aria-label="Basic example" *ngIf="!forgotPassword">
+          <button type="button" class="btn btn-light text-info" [ngClass]="{'active': button.active}" (click)="selectButton(button)" *ngFor="let button of buttons">{{button.title}}</button>
+        </div>
+      </div>
+      <div class="col-2">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="col-12" *ngIf="buttonSelected.id === 'login'">
+        <div class="row">
+          <div class="col-12">
+            <i class="fa fa-3x" [ngClass]="{'fa-signin': !forgotPassword, 'fa-tools': forgotPassword}"></i>
+          </div>
+          <!-- Login -->
+          <div class="col-12 mt-3" *ngIf="!forgotPassword">
+            <form  [formGroup] ="formLogin">
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1"><i class="fa fa-user" aria-hidden="true"></i></span>
+                </div>
+                <input formControlName="usuario" type="text" class="form-control" name="username" placeholder="Nombre de Usuario o Correo Electrónico" aria-label="Username" aria-describedby="basic-addon1" required>
+              </div>
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1"><i class="fa fa-key" aria-hidden="true"></i></span>
+                </div>
+                <input formControlName="contrasenia" type="password" class="form-control" name="password" placeholder="********" aria-label="Username" aria-describedby="basic-addon1" required>
+              </div>
+              <div class="alert mt-3 alert-danger text-center" *ngIf="mostrarMensaje">
+                <i class="fa fa-exclamation-triangle"></i>&nbsp;El Correo o contraseña no existe.
+              </div>
+              <div class="text-right">
+                <span class="text-info hand" (click)="cambiarContrasenia()">¿Olvidaste tu Contraseña?</span>
+              </div>
+              <button class="btn btn-info mt-2 btn-block text-white" [disabled]="formUsuario.invalid" (click)="logueo()">
+                <i class="fa" [ngClass]="{'fa-check': !logining, 'fa-spinner fa-spin': logining}"></i>&nbsp;Iniciar Sesión
+              </button>
+              <hr>
+              <button class="btn btn-primary btn-block text-white" (click)="loginWithGoogle()">
+                Iniciar con tu cuenta de Google
+              </button>
+            </form>
+          </div>
+          <!-- Forgot Password -->
+          <div class="col-12 mt-3" *ngIf="forgotPassword">
+            <div class="alert alert-info">
+              <i class="fa fa-exclamation"></i>&nbsp;Indica los campos seleccionados para reiniciar tu contraseña.
+            </div>
+            <form #forgotPasswordForm="ngForm">
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">
+                      <i class="fa fa-paper-plane"></i>
+                    </span>
+                  </div>
+                  <input type="text" class="form-control" placeholder="micorreo@gmail.com" name="email" [(ngModel)]="forgotPassword.email" required>
+                </div>
+                <p class="text-dark-50">Se te enviara un correo para confirmar el cambio de Contraseña.</p>
+              </div>
+              <div class="form-row">
+                <div class="col-3">
+                  <button class="btn btn-light text-danger" (click)="cancelForgotPassword()">Cancelar</button>
+                </div>
+                <div class="col-9 text-right">
+                  <button class="btn btn-light" (click)="sendConfirmation()">
+                    <i class="fa fa-cog"></i>&nbsp;Reiniciar Contraseña
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-12" *ngIf="buttonSelected.id === 'singup'">
+        <div class="row">
+          <div class="col-12">
+            <i class="fa fa-signin fa-3x"></i>
+          </div>
+          <div class="col-12 mt-2">
+            <form [formGroup] ="formUsuario">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-6">
+                    <input formControlName="nombre" type="text" onKeypress="if (event.keyCode > 32 && event.keyCode < 65) event.returnValue = false;" class="form-control" placeholder="Nombres" name="names" required>
+                  </div>
+                  <div class="col-6">
+                    <input formControlName="apellidos" type="text" onKeypress="if (event.keyCode > 32 && event.keyCode < 65) event.returnValue = false;" class="form-control" placeholder="Apellidos" name="lastnames" required>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group mt-2">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="input-group input-group-lg">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-lg"><i class="fa fa-phone"></i>&nbsp;+ 51</span>
+                      </div>
+                      <input formControlName="numCelular" onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" type="text" class="form-control"  aria-label="phone" name="phone" minlength="9" maxlength="9" placeholder="999 999 999" required>
+                    </div>
+                    <span class="help-text text-info float-right">Ingresa tu Nro de celular o de un familiar cercano</span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row mt-2">
+                <div class="col-7">
+                  <div class="input-group">
+                    <!-- pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/" -->
+                    <input formControlName="email"  (change)="busquedaCorreo($event.target.value)"type="email" class="form-control" pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" placeholder="Correo Electrónico" name="email"  required>
+                    <div class="input-group-append" *ngIf="emailExiste">
+                      <span class="input-group-text" id="basic-addon2" title="Correo Electronico ya registrado.">
+                        <i class="fa fa-times text-danger"></i>
+                      </span>
+                    </div>
+                  </div>
+                  <small class="help-text text-danger"  *ngIf="emailExiste" >Este correo ya existe.</small>
+                  <small class="help-text text-danger"  *ngIf="emailValido" >Este correo no es válido.</small>
+
+                </div>
+                <div class="col-5">
+                  <div class="input-group">
+                    <input formControlName="usuario" (blur)="busquedaUsuario($event.target.value)" type="text" class="form-control" placeholder="Nombre de Usuario" name="username" required>
+                    <div class="input-group-append" *ngIf="UsuarioExiste">
+                      <span class="input-group-text" id="basic-addon2" title="Nombre de Usuario ya registrado.">
+                        <i class="fa fa-times text-danger"></i>
+                      </span><br>
+                    </div>
+                    
+                  </div>
+                  <small class="help-text text-danger" *ngIf="UsuarioExiste">Usuario ya existe</small>
+                </div>
+              </div>
+
+              <div class="form-group mt-2">
+                <div class="row">
+                  <div class="col-6">
+                    <label for="password">Contraseña</label>
+                    <input formControlName="contrasenia" type="password" class="form-control" placeholder="********" name="password"  required>
+                  </div>
+                  <div class="col-6">
+                    <label for="confirmPassword">Confirmar Contraseña</label>
+                    <input formControlName="contraseniaConfirmar" type="password" class="form-control" placeholder="********" name="password" required>
+                    <span class="help-text text-danger" *ngIf="valContrasenia === false">Las contraseñas no coinciden.</span>
+                  </div>
+                </div>
+              </div>            
+            </form>
+          </div>
+          <div class="col-6 offset-3">
+            <button class="btn btn-primary btn-block text-white" [disabled]="!formUsuario.valid" (click)="confirmarContrasenia ()">
+              Registrarse
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
+
+<div class="mt-5 pt-5 pb-5 footer">
+  <div class="container">
+    <div class="row">
+        <div class="col-lg-4 col-xs-12 location">
+            <h4 class="mt-lg-0 mt-sm-4">Contactenos</h4>
+            <p class="mb-0"><i class=" fa fa-map-marker mr-3"></i>
+              Paseo la breña N° 527 - Huancayo</p>
+            <p class="mb-0"><i class="fa fa-phone mr-3"></i>(+51) 964050503</p>
+            <p><i class="fa fa-envelope-o mr-3"></i>chifachaufan@gmail.com</p>
+          </div>
+      <div class="col-lg-5 col-xs-12 about-company">
+        <h4>Horario de Atención</h4>
+        <p class="pr-5 text-white-50">Hora de atención: 12:00 PM – 11:00 PM <br> 
+          Lunes a Domingos</p>
+      </div>
+
+      
+      <div class="col-lg-3 col-xs-12 links">
+
+        <h4>Siguenos en</h4>
+          <a href="https://web.facebook.com/ChinesseFoodChaufan/"><i class="fab fa-facebook-square mr-2"></i></a>
+            <a href="https://www.youtube.com/channel/UCytVb-D6TAIle-oLiNQELvQ/"><i class="fab fa-youtube mr-2"></i></a>
+            <a href="https://web.whatsapp.com/"><i class="fab fa-whatsapp mr-2"></i></a>
+      </div> 
+    </div>
+  </div>
+</div>
+</div>
+

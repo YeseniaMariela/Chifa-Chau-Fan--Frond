@@ -1,0 +1,433 @@
+<app-navbar></app-navbar>
+
+<div class="container-fluid">
+<div class="row mt-3">
+  <div class="col-12 text-right">
+    <button class="btn btn-primary" (click)="openModal('newReservation')">
+      <i class="fa fa-plus"></i>&nbsp;Nueva Reserva
+    </button>
+  </div>
+  <div class="col-12 text-center">
+    <div class="row" *ngIf="!reservasFiltro">
+      <div class="col-12 pt-5">
+        <span class="display-4">
+          <i class="fa fa-times"></i>&nbsp;No tienes reservaciones registradas.
+        </span>
+      </div>
+    </div>
+    <div class="row mt-2" *ngIf="reservasFiltro">
+      <div class="col-4" *ngFor="let reFiltro of reservasFiltro">
+        <div class="card" (click)="detallesReserva(reFiltro.id)">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12">
+                <span style="font-size: 30px;">{{reFiltro.fecha}}</span><br>
+                <span>
+                  <span>x<strong style="font-size: 40px;">{{reFiltro.numeroPersonas}}</strong></span>
+                </span>
+              </div>
+              <div class="col-12 text-right text-primary">S/&nbsp;{{reFiltro.total | number:'1.2-2'}}</div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <!-- <button class="btn btn-danger float-left rounded-circle text-white" (click)="deleteReservation(r)">
+              <i class="fa fa-trash"></i>
+            </button> -->
+            <ng-container *ngFor="let mesa of mesas">
+              <ng-template [ngIf]="mesa.id === reFiltro.mesaId">
+                <span class="mr-5">Mesa:&nbsp;{{mesa.numeroMesa}}</span>
+              </ng-template>
+            </ng-container>            
+            <span class="badge badge-warning">{{reFiltro.estado === 'RESERVADO' ? 'RESERVADO' : 'ATENDIDO'}}</span> 
+            <!-- <button class="btn btn-info float-right rounded-circle text-white" (click)="editSale(r)">
+              <i class="fa fa-pencil"></i>
+            </button> -->
+          </div>
+        </div>
+      </div>  
+    </div>
+  </div>
+</div>
+
+
+<div bsModal #newReservationModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <form>
+          <div class="row">
+            <div class="col-5 mb-2">
+              <h4 id="dialog-sizes-name1" class="modal-title pull-left">
+                <span *ngIf="sale.id">Editar</span><span *ngIf="!sale.id">Nueva</span>&nbsp;Reservación
+              </h4>
+            </div>
+            <div class="col-5">
+              <button class="btn btn-primary" *ngIf="!sale.id" [disabled]=" !mesaReserva || !validacionUnProducto" (click)="insertarReserva()">
+                <i class="fa fa-save"></i>&nbsp;Guardar
+              </button>
+              <button class="btn btn-success" *ngIf="sale.id" (click)="SaveEditSale()">
+                <i class="fa fa-pencil"></i>&nbsp;Actualizar
+              </button>
+            </div>
+            <div class="col-2">
+              <button type="button" class="close float-right" (click)="closeModal('newReservation')" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="col-12">
+              <ul class="nav nav-tabs">
+                <li class="nav-item" (click)="selectDetail(d)" *ngFor="let d of details">
+                  <a class="nav-link" [ngClass]="{'active': d.selected, 'text-info hand': !d.selected}">{{d.name | titlecase}}</a>
+                </li>
+              </ul>
+              <div class="tab-content" id="v-pills-tabContent" *ngIf="detailSelected">
+                <div class="tab-pane fade" id="v-pills-home" role="tabpanel" [ngClass]="{'show active': detailSelected.id === 'politics'}" aria-labelledby="v-pills-home-tab">
+                  <div class="row">
+                    <div class="col-12 mt-3">
+                      <h1 class="display-4 font-title text-center text-uppercase">POLITICAS DE RESERVA “CHIFA CHAU FAN”</h1>
+                      <strong class="display-4 font-subtitle">PROCESO DE RESERVA</strong>
+                      <ul>
+                        <li>Toda Reserva se deben de realizar un día después de la fecha actual en adelante.</li>
+                        <li>Las reservas no tienen ningún costo.</li>
+                        <li>Toda reserva se realiza con un tiempo máximo de una Hora.</li>
+                        <li>Máximo de comensales es de 8 y mínimo 1. </li>
+                        <li>Máximo tiempo de tardanza en asistir a la reserva es de 15 minutos pasado el tiempo se dará por terminada la reserva lo cual no tendrá derecho a devolución del dinero.</li>
+                        <li>Para poder validar su reserva al momento de ingresar al local necesitamos el código QR
+                          para validar su reserva y se mejore la atención.</li>
+                      </ul>
+                      
+                      <strong class="display-4 font-subtitle">PAGO DE RESERVA</strong>
+                      <ol>
+                        <li>EL pago de la reserva por los clientes, según acorde de la empresa se realizará el monto
+                          total de los buffets de comida china con la pasarela de pago.</li>
+                          <li>Antes de realizar el pago verificar bien su reserva, una vez realizada la reserva no podrá
+                            modificar o cancelar su reserva.</li>
+                      </ol>
+                      <strong class="display-4 font-subtitle">DATOS DEL CLIENTE</strong>
+                      <ol>
+                        <li>Los que usted proporciona al registrarse como usuario o al realizar una reserva deben de ser datos reales.</li>
+                        <li>Por seguridad el cliente debe de registrarse e iniciar sesión con su usuario, correo o
+                          loguearse, para poder realizar sus respectivas reservas.</li>
+                        <li>El cliente se compromete a utilizar los servicios de manera acorde a la ley, buenas costumbres, moral, orden público y así mismo con lo dispuesto en lo presentes Términos y/o Condiciones En consecuencia, queda obligado a no utilizar los servicios, con fines o efectos ilícitos y/o contrarios a lo establecido en los presentes Términos y/o Condiciones, que de una forma puedan dañar los servicios, de la empresa “Chifa Chau Fan”.</li>
+                      </ol>
+                      <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" name="politics" id="customSwitch1" [(ngModel)]="sale.politics">
+                        <label class="custom-control-label" for="customSwitch1">Acepto los termino y condiciones antes mencionadas.</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="v-pills-home" role="tabpanel" [ngClass]="{'show active': detailSelected.id === 'reservation'}" aria-labelledby="v-pills-home-tab">
+                  <div class="row">
+                    <div class="col-12 mt-2">
+                      <strong>Fecha de Reserva</strong> <br>
+                      <input
+                        readonly
+                        placeholder="DD-MM-AAAA"
+                        class="form-control"
+                        name="date_reservation"
+                        [(ngModel)]="fechaReserva"
+                        #dp="bsDatepicker"
+                        [minDate]="currentDate"
+                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-red'}"
+                        bsDatepicker
+                        (change)="listarMesas()"
+                        required>
+                    </div>
+                    <div class="col-12 mt-2">
+                      <strong>Seleccione la Hora:</strong>
+                      <div class="row">
+                        <div class="col-4">
+                          <input type="time" (change)="guardarHora($event.target.value);listarMesas()" class="form-control"  min="09:00" max="22:00" [value]="horaActual" required >
+                        </div>
+                        
+                      </div>
+                    </div>
+                    <div class="col-12 mt-2">
+                      <div class="form-row">
+                        <div class="col-6">
+                          <div class="row">
+                            <div class="col-6 mb-2">
+                              <strong>Mesas disponibles:</strong>
+                            </div>
+                    <!--  -->
+                            <div class="container">
+                              <div class="row">
+                                <div class="col-4 mt-2"  style="background-color:white">
+                                  <div id="circulo1" class="forma"></div>
+                                  <p>Mesa Libre</p>
+                                </div>
+                                <div class="col-4 mt-2"  style="background-color:white">
+                                    <div id="circulo2" class="forma"></div>
+                                    <p>Mesa Ocupado</p>
+                                </div>
+                              </div> 
+                              </div>
+
+                            <div class="col-12">
+                              <div class="form-row">
+                                <div class="col-3" *ngFor="let mesa of mesas">
+                                  <div class="card hand" *ngIf="mesa.id === mesaReserva">
+                                    <img [src]="mesa.imagen" height="80" class="card-img-top" >
+                                      <div class="card-body text-center" style="background: #e04a58;">
+                                        <small>{{mesa.numeroMesa | uppercase}}</small>
+                                      </div>
+                                  </div>
+                                  <div class="card hand" *ngIf="mesa.id !== mesaReserva && mesa.estado === 'OCUPADO'" >
+                                    <img [src]="mesa.imagen" height="80" class="card-img-top" >
+                                      <div class="card-body text-center" style="background: #e04a58;" >
+                                        <small>{{mesa.numeroMesa | uppercase}}</small>
+                                      </div>
+                                  </div>
+                                  <div class="card hand" *ngIf="mesa.id !== mesaReserva && mesa.estado !== 'OCUPADO'" (click)="guardarMesa(mesa.id)" >
+                                    <img [src]="mesa.imagen" height="80" class="card-img-top" >
+                                      <div class="card-body text-center" >
+                                        <small>{{mesa.numeroMesa | uppercase}}</small>
+                                      </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="row">
+                            <div class="col-12 mb-2">
+                              <strong>Cantidad de Comensales<span>:&nbsp;{{sale.cantidadPersonas}} persona<span *ngIf="sale.cantidadPersonas>1">s</span></span></strong>
+                            </div>
+                            <div class="col-12 text-center">
+                              <img src="assets/images/table{{sale.cantidadPersonas}}.png"height="250" width="70%" alt="">
+                              <br>
+                              <button class="btn btn-lg rounded-circle btn-light mr-5" (click)="togglePerson('minus')">
+                                <i class="fa fa-minus fa-2x text-danger"></i>
+                              </button>
+                              <button class="btn btn-lg rounded-circle btn-light" (click)="togglePerson('plus')">
+                                <i class="fa fa-plus fa-2x text-primary"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mt-2 text-right">
+                      <button class="btn btn-primary" (click)="validarFechaHoraMesa()">
+                        Continuar&nbsp;<i class="fa fa-arrow-right"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="v-pills-home" role="tabpanel" [ngClass]="{'show active': detailSelected.id === 'delivery'}" aria-labelledby="v-pills-home-tab">
+                  <div class="row">
+                    <div class="col-6">
+                      <h1 class="display-4" style="font-size: 18px;" *ngIf="!itemsCarta">
+                        <i class="fa fa-times"></i>&nbsp;Registra Productos
+                      </h1>
+                      <table class="table table-striped" *ngIf="itemsCarta.length>0">
+                        <thead>
+                          <tr>
+                            <th>Detalle de Plato</th>
+                            <th class="text-center">Cant.</th>
+                            <th class="text-right">Total</th>
+                            <th><br></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of itemsCarta; let index = index">
+                            <td style="vertical-align: middle;">
+                              <span style="font-size: 14px;">{{item['producto'].nombre | uppercase}}</span><br>
+                              <span class="badge badge-primary">S/&nbsp;{{item['producto'].precioUnidad | number: '1.2-2'}}</span>
+                            </td>
+                            <td style="vertical-align: middle;" class="text-center">
+                              x
+                              <strong style="font-size: 28px;">{{item['cantidad']}}</strong>
+                            </td>
+                            <td style="vertical-align: middle;" class="text-right text-primary">
+                              {{item['producto'].precioUnidad * item['cantidad']| number:'1.2-2'}}
+                            </td>
+                            <td class="text-center">
+                              <button class="btn btn-danger rounded-circle" (click)="eliminarProductoCarrito(index)">
+                                <i class="fa fa-trash"></i>
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                        <tfoot>
+                          <tr>
+                            <th colspan="2" class="text-right">
+                              TOTAL
+                            </th>
+                            <td class="text-right">{{totalVenta | number:'1.2-2'}}</td>
+                            <td><br></td>
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
+                    <div class="col-6">
+                      <ul class="nav nav-tabs">
+                        <li class="nav-item" *ngFor="let categoria of categoriasProducto" (click)="filtrarProductos(categoria.id)">
+                          <a class="nav-link" >{{categoria.nombre | titlecase}}</a>
+                        </li>
+                      </ul>
+                      <ul class="list-group" style="max-height: 400px; overflow: auto;">
+                        <li class="list-group-item" *ngFor="let p of productosFiltrados">
+                          <div class="row">
+                            <div class="col-7">
+                              <img [src]="p.imagen" style="width: 100%; height: 80px;">
+                            </div>
+                            <div class="col-5 text-left" style="font-size: 12px;">
+                              <div class="row">
+                                <div class="col-12">
+                                  <strong class="text-primary">{{p.nombre | uppercase}}</strong> <br>
+                                  <strong class="text-danger">{{p.precioUnidad | number:'1.2-2'}}</strong> <br>
+                                </div>
+                                <div class="col-12 text-center">
+                                  <button class="btn btn-sm btn-danger rounded-circle mr-2" (click)="resCarta(p)">
+                                    <i class="fa fa-minus"></i>
+                                  </button>
+                                  <button class="btn btn-sm btn-primary rounded-circle" (click)="addCarta(p)">
+                                    <i class="fa fa-plus"></i>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+
+                    </div>
+                    <div class="col-12">
+                      <button class="btn btn-primary" (click)="goTo('reservation')">
+                        <i class="fa fa-arrow-left"></i>&nbsp;Volver
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12" *ngIf="sale.table_id && sale.date_reservation">
+              
+            </div>
+            <div class="row">
+              <div class="col-12" *ngIf="searchingDistributions && !distributions.length"></div>
+              <div class="col-12" *ngIf="!searchingDistributions"></div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div bsModal #confirmationModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12 text-center">
+            <strong>¡Tu pedido ha sido reservado!</strong>
+          </div>
+          <div class="col-12">
+            <p>Hola, <br>
+              ¡Gracias por tu pedido! <br>
+              En estos momento tu reserva ha sido completada. Gracias por elegir nuestra empresa. <br>
+              <strong>Fecha y Hora de Registro</strong><br>
+                    {{sale.create_at | date: 'dd/MM/yyyy hh:mm a'}}
+
+            </p>
+          </div>
+          <div class="col-12"  style="max-height: 200px; overflow: auto;">
+            <table class="table table-striped table-sm" >
+              <thead>  
+                <tr>
+                  <th colspan="2" class="text-uppercase text-danger">Detalle de Reserva</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td *ngIf="sale.initFraction && sale.finishFraction">
+
+                    <strong>Fecha de Reserva:</strong>&nbsp;{{sale.date_reservation | date: 'dd/MM/yyyy'}} <br>
+                    <strong>De:</strong>&nbsp;{{sale.initFraction.init}}&nbsp;a&nbsp;{{sale.finishFraction.finish}}
+                 </td>
+                  <td>
+                    <strong>Mesa</strong><br>
+
+                  </td>
+                </tr>
+                <tr *ngFor="let item of saleDetails">
+                  <td>
+                    <img src="assets/images/{{item.photo}}" width="60" height="60" alt="">&nbsp;{{getProductName(item) | titlecase}} <br>
+                    Cantidad: {{item.quantity}}
+                  </td>
+                  <td class="text-right text-primary">
+                    {{item.price | number:'1.2-2'}}
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td>Sub Total</td>
+                  <td class="text-right text-primary">{{sale.total_amount | number:'1.2-2'}}</td>
+                </tr>
+                <tr>
+                  <td>Descuento</td>
+                  <td class="text-right text-danger">0</td>
+                </tr>
+                <tr>
+                  <td>Total</td>
+                  <td class="text-right text-primary">{{sale.total_amount | number:'1.2-2'}}</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <div class="col-12">
+            <p>Contactenos <br>
+              Celular: 964050503 <br>
+              Correo: chifachaufan@gmail.com
+            </p>
+          </div>
+          <div class="col-4 offset-4 text-center">
+            Código QR <br>
+            <img src="{{qrCodeConfirmation}}" width="150" height="150" alt="QR Code"> <br>
+          </div>
+          <div class="col-12 text-center">
+            <p>Lo esperamos en Chifa Chau Fan</p>
+          </div>
+          <div class="col-12 text-center">
+            <button class="btn btn-danger" (click)="closeModal('confirmation')">Salir</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mt-5 pt-5 pb-5 footer">
+  <div class="container">
+    <div class="row">
+        <div class="col-lg-4 col-xs-12 location">
+            <h4 class="mt-lg-0 mt-sm-4">Contactenos</h4>
+            <p class="mb-0"><i class=" fa fa-map-marker mr-3"></i>
+              Paseo la breña N° 527 - Huancayo</p>
+            <p class="mb-0"><i class="fa fa-phone mr-3"></i>(+51) 964050503</p>
+            <p><i class="fa fa-envelope-o mr-3"></i>chifachaufan@gmail.com</p>
+          </div>
+      <div class="col-lg-5 col-xs-12 about-company">
+        <h4>Horario de Atención</h4>
+        <p class="pr-5 text-black">Hora de atención: 12:00 PM – 11:00 PM <br> 
+          Lunes a Domingos</p>
+      </div>
+
+      
+      <div class="col-lg-3 col-xs-12 links">
+
+        <h4>Siguenos en</h4>
+          <a href="https://web.facebook.com/ChinesseFoodChaufan/"><i class="fab fa-facebook-square mr-2"></i></a>
+            <a href="https://www.youtube.com/channel/UCytVb-D6TAIle-oLiNQELvQ/"><i class="fab fa-youtube mr-2"></i></a>
+            <a href="https://web.whatsapp.com/"><i class="fab fa-whatsapp mr-2"></i></a>
+      </div> 
+    </div>
+  </div>
+</div>
+</div>

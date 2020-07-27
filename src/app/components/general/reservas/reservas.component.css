@@ -1,0 +1,35 @@
+#circulo1 {
+    width: 20px;
+    height: 20px;
+    background: white;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
+    border: black 1px solid;
+ }
+
+ #circulo2 {
+   width: 20px;
+   height: 20px;
+   background: #e04a58;
+   -moz-border-radius: 50px;
+   -webkit-border-radius: 50px;
+   border-radius: 50px;
+}
+
+.btn-danger {
+   color: black;
+   background-color: white;
+   border-color: #dc3545;
+}
+
+.btn-primary {
+   color: #fff;
+   background-color: #e04a58;
+   border-color: #e04a58;
+}  */
+
+.btn:not(:disabled):not(.disabled) {
+   cursor: pointer;
+   /* background-color: #e04a58; */
+ }

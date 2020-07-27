@@ -1,0 +1,213 @@
+<div class="row mb-5">
+    <div class="col-9 mt-3">
+      <h1 class="display-4" style="font-size: 20px;">Reservas</h1><br>
+    </div>
+  
+  
+   <div>     
+                      <div class="col-12 mt-2">
+                        <h4>Buscar reservas por fechas</h4>
+                          <div class="row">
+                              <div class="col-4">
+                                
+                                  <strong>Desde la fecha</strong> <br>
+                                  <input
+                                    readonly
+                                    placeholder="DD-MM-AAAA"
+                                    class="form-control"
+                                    name="re_date_init"
+                                    [(ngModel)]="fechaInicio"
+                                    #dp="bsDatepicker"
+                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-red'}"
+                                    bsDatepicker
+                                    required>
+                              </div>
+                              <div class="col-4">
+                                  <strong>Hasta la fecha</strong> <br>
+                                  <input
+                                    readonly
+                                    placeholder="DD-MM-AAAA"
+                                    class="form-control"
+                                    name="re_date_finish"
+                                    [(ngModel)]="fechaFin"
+                                    #dp="bsDatepicker"
+                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-red'}"
+                                    bsDatepicker
+                                    required>
+                              </div> 
+                              <div class="col-4 mt-4 ">
+                                  <button class="btn btn-primary" (click)="buscarFecha()" >
+                                      <i class="fa fa-search"></i>&nbsp;Buscar
+                                  </button>
+                              </div>
+                          </div>
+                      </div> 
+    </div> 
+  
+  
+  
+  
+    <div class="col-12 mt-3 mb-3" *ngIf="filtroReservas.length !== 0" >
+      <h4>Reservas del día </h4>
+      <!-- <div class="text-right">
+        <a class="btn btn btn-primary" href="{{link}}" *ngIf="link" target="_blank">Descargar PDF</a>
+      </div> -->
+      <table class="table table-striped table-sm" id="contentToConvert">
+        <thead>
+          <tr>
+            <th style="vertical-align: middle;">Nombre Cliente</th>
+            <th style="vertical-align: middle;">Mesa</th>
+            <th style="vertical-align: middle;">Estado</th>
+            <th style="vertical-align: middle;">Cantidad<br>personas</th>
+            <th style="vertical-align: middle;">Reserva</th>
+            <th style="vertical-align: middle;">Hora de reserva</th>
+            <th style="vertical-align: middle;">Detalle</th>
+            <th style="vertical-align: middle;" class="text-right text-primary">Total</th>
+            <th style="width: 10%;"><br></th>
+          </tr>
+        </thead>
+        <tbody style="max-height: 250px !important; overflow: auto;">
+          <tr *ngFor="let fiReserva of filtroReservas">
+            <ng-container *ngFor="let usuario of usuarios">
+              <ng-template [ngIf]="usuario.id === fiReserva.clienteId">
+                <td style="vertical-align: middle;">
+                  {{usuario.apellidos | uppercase}}&nbsp;{{usuario.nombre | titlecase}} <br>
+                  <i class="fa fa-phone mr-2"></i>{{usuario.numCelular}}
+                </td>
+              </ng-template>
+            </ng-container>
+            <ng-container *ngFor="let mesa of mesas">
+              <ng-template [ngIf]="mesa.id === fiReserva.mesaId">
+                <td style="vertical-align: middle;" class="text-center">{{mesa.numeroMesa}}</td>
+              </ng-template>
+            </ng-container>
+
+            <td style="vertical-align: middle;">
+              <i class="fa fa-square mr-1" [ngClass]="{ 'text-success': fiReserva.estado === 'RESERVADO',
+                                                        'text-primary': fiReserva.estado === 'ATENDIDO'}">{{fiReserva.estado}}</i>
+            </td>
+            <td style="vertical-align: middle;" class="text-center">{{fiReserva.numeroPersonas}}</td>
+            <td style="vertical-align: middle;" class="text-center">{{fiReserva.fecha | date: 'dd/MM/yyyy'}}</td>
+            <td style="vertical-align: middle;" class="text-center">{{fiReserva.hora}}</td>
+            <td style="vertical-align: middle;"> 
+              <button class="" (click)="openModal(template,fiReserva.id)" >
+                <i class="fa fa-eye"></i>
+              </button>
+            </td> 
+            <td style="vertical-align: middle;" class="text-right text-primary">S/&nbsp;{{fiReserva.total}}</td>
+            <td style="vertical-align: middle;">
+              <button class="btn btn-sm btn-success rounded-circle mr-2"  *ngIf="fiReserva.estado === 'RESERVADO'" title="Atender" (click)="cambiarEstadoReserva(fiReserva.id)">
+                <i class="fa fa-check"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th colspan="7" class="text-right">TOTAL</th>
+            <td class="text-right text-primary">S/&nbsp;{{precioTotalReservas | number:'1.2-2'}}</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <div class="col-12 mt-3 mb-3 text-center" *ngIf="filtroReservas.length === 0">
+      <i class="fa fa-times text-dark-50"></i>&nbsp;No existen ventas en este rango de fechas.
+    </div>
+  </div>
+  
+  <!-- <div bsModal #detailModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="row">
+            <p>
+              Hola mundo
+            </p>
+            <div class="col-12"  style="max-height: 200px; overflow: auto;">
+              <table class="table table-striped table-sm" >
+                <tbody>
+                  <tr *ngFor="let item of saleDetailed.detail">
+                    <td>
+                      <img src=" http://localhost:8080/static/products/{{item.photo}}" width="60" height="60" alt="">&nbsp;{{getProductName(item.product_id) | titlecase}} <br>
+                      Cantidad: {{item.quantity}}
+                    </td>
+                    <td class="text-right text-primary">
+                      {{item.price | number:'1.2-2'}}
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td>Sub Total</td>
+                    <td class="text-right text-primary">{{saleDetailed.total_amount | number:'1.2-2'}}</td>
+                  </tr>
+                  <tr>
+                    <td>Descuento</td>
+                    <td class="text-right text-danger">0</td>
+                  </tr>
+                  <tr>
+                    <td>Total</td>
+                    <td class="text-right text-primary">{{saleDetailed.total_amount | number:'1.2-2'}}</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+            <div class="col-12 text-center">
+              <button class="btn btn-danger" (click)="closeModal()">Salir</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  
+  
+  
+  <ng-template #template>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-12">
+          <button type="button" class="close pull-right hand" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <div class="col-12 mt-3">
+            <table class="table table-striped table-sm" >
+              <h3>Detalle de la reserva</h3>
+              <ng-template [ngIf]="!reserva">
+              cargando
+              </ng-template>
+              <ng-template [ngIf]="reserva">
+                <tbody  *ngFor="let detProducto of detallesProductosReserva">
+                  <tr *ngFor="let producto of productos">
+                    <ng-template [ngIf]="detProducto.productoId === producto.id">
+                      <td>
+                        <img [src]="producto.imagen" width="60" height="60" alt="">&nbsp;{{producto.nombre | titlecase}} <br>
+                        Cantidad: {{detProducto.cantidad}}
+                      </td>
+                      <td class="text-right text-primary">
+                        {{detProducto.precio | number:'1.2-2'}}
+                      </td>
+                    </ng-template>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td>Sub Total</td>
+                    <td class="text-right text-primary">{{reserva.venta.total}}</td>
+                  </tr>
+                  <tr>
+                    <td>Descuento</td>
+                    <td class="text-right text-danger">0</td>
+                  </tr>
+                  <tr>
+                    <td>Total</td>
+                    <td class="text-right text-primary">{{reserva.venta.total}}</td>
+                  </tr>
+                </tfoot>
+              </ng-template>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>

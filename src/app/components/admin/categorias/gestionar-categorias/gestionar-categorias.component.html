@@ -1,0 +1,74 @@
+<div class="row">
+    <div class="col-12 pt-2 mt-4">
+      <div class="card">
+        <div class="card-header">
+          <h4>
+            Categorías
+          </h4>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-6">
+              <div class="text-center">
+                <h5>Registrar Categoría</h5>
+              </div>
+              <form [formGroup] ="categoriaForm" enctype="multipart/form-data">
+                <div class="row">
+                  <!-- para crear la categoria -->
+                  <ng-template [ngIf]="!categoria">
+                    <div class="col-12 mb-2">
+                      <h6>Nombre</h6>
+                      <input formControlName="nombre" type="text" class="form-control" id="nombre" name="name" placeholder="Categoría" required> <br>
+                      <h6>Descripción </h6>
+                      <textarea formControlName="descripcion" name="description" class="form-control" cols="30" rows="2" style="resize: none;" placeholder="Describa la categoria brevemente"></textarea>
+                    </div>
+                  </ng-template>
+                  <!-- fin-->
+                  <!-- para actulizar la categoria -->
+                  <ng-template [ngIf]="categoria">
+                    <div class="col-12 mb-2">
+                      <h6>Nombre</h6>
+                      <input formControlName="nombre" type="text" class="form-control" id="nombre" name="name" placeholder="Categoría" required [value]="categoria.nombre"> <br>
+                      <h6>Descripción </h6>
+                      <textarea formControlName="descripcion" name="description" class="form-control" cols="30" rows="2" style="resize: none;" placeholder="Describa la categoria brevemente" [value]="categoria.descripcion"></textarea>
+                    </div>
+                  </ng-template>
+                  <!-- fin-->
+                  <div class="col-12 mb-2 text-center">
+                    <button class="btn btn-danger mr-5" (click)="cancelarEdicion()" *ngIf="categoria">
+                      <i class="fa fa-times"></i>&nbsp;Cancelar Edición
+                    </button>
+                    <button class="btn btn-success" (click)="actulizarCategoria()"  *ngIf="categoria">
+                      <i class="fa fa-check"></i>&nbsp;Terminar Edición
+                    </button>
+                    <button class="btn btn-primary" (click)="crearCategoria()" *ngIf="!categoria">
+                      <i class="fa fa-save"></i>&nbsp;Guardar Producto
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="col-6">
+              <div class="col-6 text-center">
+                <h5>Listado de Categorias</h5>
+              </div>
+              <ul class="list-group" style="max-height: 400px; overflow: auto;">
+                <li class="list-group-item" *ngFor="let p of categoriasProducto; let index = index">
+                  <div class="row">
+                    <div class="col-4">
+                      {{p.nombre}}
+                    </div>
+                    <div class="col-4">
+                      <button class="btn btn-primary mr-3" (click)="obtenerCategoria(p.id)"><i class="fas fa-pencil-alt"></i></button>
+                      <button class="btn btn-danger" (click)="eliminarCargo(p.id)"><i class="fa fa-trash"></i></button>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

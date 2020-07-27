@@ -1,0 +1,103 @@
+li {
+    list-style:none;
+    font-weight: bold;  
+}
+h4{
+    text-transform: uppercase;
+    font-size: 20px;
+    letter-spacing: 3pt;
+}
+li a{
+    color: #a85454;
+    letter-spacing: 2pt;
+    font-family: Arial,  sans-serif;
+}
+i{
+    color: black;
+}
+
+a{
+    text-decoration: none;
+}
+.reports{
+    padding-bottom: 200%;
+   
+}
+/* .reports{
+  padding-bottom: 200%;
+ 
+} */
+#cabecera{
+    -webkit-box-shadow: 0 10px 6px -6px #777;
+    -moz-box-shadow: 0 10px 6px -6px #777;
+    box-shadow: 10px 10px 6px -6px #777;
+}
+
+.menu{
+    -webkit-box-shadow: 0 10px 6px -6px #777;
+    -moz-box-shadow: 0 10px 6px -6px #777;
+    box-shadow: 10px 10px 6px -6px #777;
+    /* box-shadow: 6px 6px 6px #a85454; */
+}
+
+  /* login dropdown */
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropbtn {
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .dropbtn:hover, .dropbtn:focus {
+    opacity: 0.9;
+  }
+  
+  .dropdown {
+    /* float: right; */
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    right: 0;
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown a:hover {background-color: #ddd;}
+
+  
+  /* Dropdown Button */
+.dropbtn {
+  background-color: #f4f6f6;;
+  color: white;
+  padding: 13px;
+  font-size: 13px;
+  border: none;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
+  

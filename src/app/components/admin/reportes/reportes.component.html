@@ -1,0 +1,162 @@
+<div class="container mt-4">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-12">
+                <h4> 10 productos mas vendidos</h4>
+                <div class="row">
+                    <div class="col-12 mt-2">
+                        <div class="row">
+                            <div class="col-3">
+                                <strong>Desde la fecha</strong> <br>
+                                <input
+                                  readonly
+                                  placeholder="DD-MM-AAAA"
+                                  class="form-control"
+                                  name="proFechaInicio"
+                                  [(ngModel)]="proFechaInicio"
+                                  #dp="bsDatepicker"
+                                  [minDate]="currentDate"
+                                  [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-red'}"
+                                  bsDatepicker
+                                  required>
+                            </div>
+                            <div class="col-3">
+                                <strong>Hasta la fecha</strong> <br>
+                                <input
+                                  readonly
+                                  placeholder="DD-MM-AAAA"
+                                  class="form-control"
+                                  name="proFechaFin"
+                                  [(ngModel)]="proFechaFin"
+                                  #dp="bsDatepicker"
+                                  [minDate]="currentDate"
+                                  [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-red'}"
+                                  bsDatepicker
+                                  required>
+                            </div> 
+                            <div class="col-5 mt-4 ">
+                                <button class="btn btn-primary" [disabled]="!proFechaInicio || !proFechaFin" (click)="ListarProductosMasVendidos()" >
+                                    <i class="fa fa-search"></i>&nbsp;Buscar
+                                </button>
+                                <button class="btn btn-light text-primary float-right" 
+                                
+                                 (click)="pdfTopProductos()" *ngIf ="topProductos">
+                                    <i class="fa fa-download"></i>&nbsp;Exportar
+                                </button>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+                <div class="mt-2" *ngIf ="topProductos" id="topProductos">
+                    <h3>Lista de Productos</h3>
+                    <table class="table" >
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Categoria</th>
+                            <th>Precio<br>Unitario</th>
+                            <th>Cantidad</th>
+                        </tr>
+                    </thead>
+                    <tbody >
+                        <tr *ngFor="let datoPro of datosTopPro">
+                                <td>{{datoPro.producto.id}}</td>
+                                <td>
+                                            {{datoPro.producto.nombre}}
+                                </td>
+                                <td>{{datoPro.categoria}}</td>
+                                <td class="text-right text-primary">{{datoPro.producto.precioUnidad | number:'1.2-2'}}</td>
+                                <td class="text-center">{{datoPro.cantidad}}</td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div>
+                <div class="mt-2 text-center" *ngIf="!topProductos">
+                    No hay productos que mostrar.
+                </div>
+            </div>
+            <div class="col-12">
+                <h4>Clientes mas frecuentes</h4>
+                <div class="row">
+                    <div class="col-12 mt-2">
+                        <div class="row">
+                            <div class="col-3">
+                                <strong>Desde la fecha</strong> <br>
+                                <input
+                                  readonly
+                                  placeholder="DD-MM-AAAA"
+                                  class="form-control"
+                                  name="ca_date_init"
+                                  [(ngModel)]="cliFechaInicio"
+                                  #dp="bsDatepicker"
+
+                                  [minDate]="currentDate"
+                                  [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-red'}"
+                                  bsDatepicker
+                                  required>
+                            </div>
+                            <div class="col-3">
+                                <strong>Hasta la fecha</strong> <br>
+                                <input
+                                  readonly
+                                  placeholder="DD-MM-AAAA"
+                                  class="form-control"
+                                  name="ca_date_finish"
+                                  [(ngModel)]="cliFechaFin"
+                                  #dp="bsDatepicker"
+                                  [minDate]="currentDate"
+                                  [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-red'}"
+                                  bsDatepicker
+                                  required>
+                            </div> 
+                            <div class="col-5 mt-4 ">
+                                <button class="btn btn-primary" [disabled]="!cliFechaInicio || !cliFechaFin" (click)="listarTopClientes()" >
+                                    <i class="fa fa-search"></i>&nbsp;Buscar
+                                </button>
+                                <button class="btn btn-light text-primary float-right"  (click)="pdfTopClientes()"
+                                *ngIf="topClie">
+                                    <i class="fa fa-download"></i>&nbsp;Exportar
+                                </button>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+                <div class="mt-2" *ngIf="topClie" id="topClientes">
+                    <h3>Lista de Clientes</h3>
+                    <table class="table" >
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Datos del Cliente</th>
+                            <th>Correo Electrónico</th>
+                            <th>Cantidad de Ventas</th>
+                            <th class="text-right">Monto Total</th>
+                        </tr>
+                    </thead>
+                    <tbody >
+                        <tr *ngFor="let datosCli of datosTopClie">
+                            <td>{{datosCli.cliente.id}}</td>
+                            <td>
+                                {{datosCli.cliente.apellidos | titlecase}} {{datosCli.cliente.nombre}} <br>
+                                <i class="fa fa-phone"></i>&nbsp;{{datosCli.cliente.numCelular}}
+                            </td>
+                            <td>{{datosCli.cliente.email}}</td>
+                            <td class="text-center">{{datosCli.cantidadVenta}}</td>
+                            <td class="text-right text-primary">{{datosCli.monto | number:'1.2-2'}}</td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div>
+                <div class="mt-2 text-center" *ngIf="!topClie">
+                    No hay clientes que mostrar.
+                </div>
+            </div>
+        </div>    
+        
+    </div>
+</div>
+
+
+
+

@@ -1,0 +1,241 @@
+
+<div class="col-12 pt-3 mt-4">
+    <div class="card">
+      <div class="card-header">
+        Usuarios
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <!-- Grabar usuarios -->
+          <div class="col-6">
+            <div class="col-6 text-center">
+              <h5>Registrar Usuarios</h5>
+          </div>
+            <div class="row">
+              <div class="col-12 mt-2">
+                <form [formGroup] ="formUsuario">
+                  <!-- Crear usuarios -->
+                    <ng-template [ngIf]="!usuario">
+                        <div class="form-group">
+                            <div class="row">
+                            <div class="col-6">
+                                <input formControlName="nombre" type="text" class="form-control" placeholder="Nombres" name="names" onKeypress="if (event.keyCode > 32 && event.keyCode < 65) event.returnValue = false;"  required>
+                            </div>
+                            <div class="col-6">
+                                <input formControlName="apellidos" type="text" class="form-control" placeholder="Apellidos" name="lastnames" onKeypress="if (event.keyCode > 32 && event.keyCode < 65) event.returnValue = false;" required>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="form-group mt-2">
+                            <div class="row">
+                            <div class="col-12">
+                                Escribe tu Numero de Celular
+                                <div class="input-group input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-lg"><i class="fa fa-phone"></i>&nbsp;+ 51</span>
+                                </div>
+                                <input formControlName="numCelular" onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" placeholder="Número de Celular" type="text" class="form-control" placeholder="999 999 999" name="phone" maxlength="9" minlength="9"required>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="form-group mt-2">
+                            <div class="row">
+                            <div class="col-12">Tipos de Usuario</div>
+                            <div class="col-7 text-center" >
+                                <select class="form-control"  formControlName="tipoUsuario">
+                                    <option value="" disabled>Seleccione un Tipo de Usuario</option>
+                                    <option value ="ADMINISTRADOR">Administrador</option>
+                                    <option value ="USUARIO">Usuario</option>
+                                    <option value ="CLIENTE">Cliente</option>
+                                </select> 
+                            </div>
+                            </div>
+                        </div>
+                        <div class="form-group mt-2">
+                            <div class="input-group">
+                            <input formControlName="email" type="text" class="form-control" (blur)="busquedaCorreo($event.target.value)"  placeholder="Correo Electrónico" name="email" pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}"  required>
+                            <div class="input-group-append alert-danger" *ngIf="emailExiste">
+                                <span class="input-group-text" id="basic-addon2" title="Correo Electronico ya registrado.">
+                                <i class="fa fa-times text-danger"></i>&nbsp;Correo ya registrado.
+                                </span>
+                            </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group mt-2">
+                            <div class="row">
+                                <div class="col-12">Genero</div>
+                                <div class="col-4">
+                                    <input type="radio" name="gender" (click)="obtenerGenero('MASCULINO')" value="MASCULINO" checked> Masculino <br>
+                                </div>    
+                                <div class="col-4">
+                                    <input type="radio" name="gender" (click)="obtenerGenero('FEMENINO')" value="FEMENINO"> Femenino <br>
+                                </div>    
+                            </div>
+                        </div>
+                        <div class="form-group mt-2">
+                            <div class="row">
+                            <div class="col-7">
+                                <div class="input-group">
+                                <input formControlName="usuario" (blur)="busquedaUsuario($event.target.value)" type="text" class="form-control" placeholder="Nombre de Usuario"  name="username" required>
+                               
+                                </div>
+                                <div class="alert-danger text-center" *ngIf="UsuarioExiste">
+                                    <i class="fa fa-exclamation-triangle"></i>&nbsp;El Usuario ya existe.
+                                </div>
+                            </div>
+                            <div class="col-5">
+                                <input formControlName="contrasenia"  type="password" class="form-control" placeholder="********" name="password" required>
+                            </div>
+                            </div>
+                        </div>  
+                    </ng-template>
+                  <!-- Actualizar usuarios -->
+                  <ng-template [ngIf]="usuario">
+                    <div class="form-group">
+                        <div class="row">
+                        <div class="col-6">
+                            <input [value]="usuario.nombre" formControlName="nombre" type="text" class="form-control" placeholder="Nombres" name="names" onKeypress="if (event.keyCode > 32 && event.keyCode < 65) event.returnValue = false;" required>
+                        </div>
+                        <div class="col-6">
+                            <input [value]="usuario.apellidos" formControlName="apellidos" type="text" class="form-control" placeholder="Apellidos" name="lastnames" onKeypress="if (event.keyCode > 32 && event.keyCode < 65) event.returnValue = false;" required>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="form-group mt-2">
+                        <div class="row">
+                        <div class="col-12">
+                            Escribe tu Numero de Celular
+                            <div class="input-group input-group-lg">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-lg"><i class="fa fa-phone"></i>&nbsp;+ 51</span>
+                            </div>
+                            <input [value]="usuario.numCelular" formControlName="numCelular" onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" placeholder="Número de Celular" type="text" class="form-control" placeholder="999 999 999" name="phone" maxlength="9" required>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="form-group mt-2">
+                        <div class="row">
+                        <div class="col-12">Tipos de Usuario</div>
+                        <div class="col-7 text-center" >
+                            <select  [value]="usuario.tipoUsuario" class="form-control"  formControlName="tipoUsuario">
+                                <option value="" disabled>Seleccione un Tipo de Usuario</option>
+                                <option value ="ADMINISTRADOR">Administrador</option>
+                                <option value ="USUARIO">Usuario</option>
+                                <option value ="CLIENTE">Cliente</option>
+                            </select> 
+                        </div>
+                        </div>
+                    </div>
+                    <div class="form-group mt-2">
+                        <div class="input-group">
+                            <input [value]="usuario.email" formControlName="email" type="text" class="form-control" placeholder="Correo Electrónico" name="email" 
+                            pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" required>
+                        </div>
+                        <div class="alert-danger text-center" *ngIf="CorreoExiste">
+                            <i class="fa fa-exclamation-triangle"></i>&nbsp;El Correo ya existe.
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-12">Genero</div>
+                            <ng-template [ngIf]="usuario.genero === 'MASCULINO'">
+                                <div class="col-4">
+                                    <input type="radio" name="gender" (click)="obtenerGenero('MASCULINO')" value="MASCULINO" checked> Masculino <br>
+                                </div>    
+                                <div class="col-4">
+                                    <input type="radio" name="gender" (click)="obtenerGenero('FEMENINO')" value="FEMENINO"> Femenino <br>
+                                </div>  
+                            </ng-template>
+                            <ng-template [ngIf]="usuario.genero === 'FEMENINO'">
+                                <div class="col-4">
+                                    <input type="radio" name="gender" (click)="obtenerGenero('MASCULINO')" value="MASCULINO" > Masculino <br>
+                                </div>    
+                                <div class="col-4">
+                                    <input type="radio" name="gender" (click)="obtenerGenero('FEMENINO')" value="FEMENINO" checked> Femenino <br>
+                                </div>  
+                            </ng-template>
+                        </div>
+                    </div>
+                    <div class="form-group mt-2">
+                        <div class="row">
+                        <div class="col-7">
+                            <div class="input-group">
+                            <input [value]="usuario.usuario" formControlName="usuario" type="text" class="form-control" placeholder="Nombre de Usuario"  name="username" required>
+                        </div>
+                        <div class="alert-danger text-center" *ngIf="UsuarioExiste">
+                            <i class="fa fa-exclamation-triangle"></i>&nbsp;El Usuario ya existe.
+                        </div>
+                        </div>
+                        <div class="col-5">
+                            <input [value]="usuario.contrasenia" formControlName="contrasenia"  type="password" class="form-control" placeholder="********" name="password" required>
+                        </div>
+                        </div>
+                    </div>  
+                  </ng-template>
+                </form>
+              </div>
+              <div class="col-12 text-center">
+                <button class="btn btn-danger mr-5" *ngIf="usuario" (click)="cancelarEdicion()">
+                  <i class="fa fa-times"></i>&nbsp;Cancelar Edición
+                </button>
+                <button class="btn btn-success" *ngIf="usuario" (click)="actualizarUsuario()">
+                  <i class="fa fa-check"></i>&nbsp;Terminar Edición
+                </button>
+                <button class="btn btn-primary text-white" *ngIf="!usuario" (click)="crearUsuario()">
+                  Registrarse
+                </button>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+          <!-- Listar usuarios -->
+          <ng-template [ngIf]="!usuarios">
+          Cargando
+          </ng-template>
+          <ng-template [ngIf]="usuarios">
+            <div class="col-6">
+                <ul class="list-group" style="max-height: 300px; overflow: auto;">
+                    <li class="list-group-item" *ngFor="let u of usuarios; let index = index">
+                        <div class="row">
+                        <div class="col-1 text-center">
+                            <div *ngIf="u.tipoUsuario === 'ADMINISTRADOR'">
+                                <span class="badge badge-warning">ADM</span>
+                            </div>    
+                            <div *ngIf="u.tipoUsuario === 'CLIENTE'">
+                                <span class="badge badge-secondary">CLI</span>
+                            </div> 
+                            <div *ngIf="u.tipoUsuario === 'USUARIO'">
+                                <span class="badge badge-info">USU</span>
+                            </div>  
+                        </div>
+                        <div class="col-6">
+                            <span class="badge badge-primary mr-3">{{u.usuario}}</span>{{u.apellidos | uppercase}}&nbsp;{{u.nombre | titlecase}} <br>
+                            {{u.email}}
+                        </div>
+                       
+                        <div class="col-3 text-right">
+                            <button class="btn btn-info" (click)="obtenerUsuario(u.id)">
+                            <i class="fa fa-edit"></i>
+                            </button>
+                        </div>
+                        <div class="col-1">
+                            <button class="btn btn-danger" (click)="eliminarUsuario(u.id)"><i class="fa fa-trash"></i></button>
+                        </div>
+                        </div>
+                    </li>
+                </ul>
+                </div>
+            </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+ 

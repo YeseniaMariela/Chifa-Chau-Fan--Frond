@@ -1,0 +1,129 @@
+<app-navbar></app-navbar>
+<div class="imagen">
+    <img class="pb-5" src="assets/images/contact.jpg" width="100%" >          
+</div>
+
+
+<div class="col-md-12 pt-5">
+    <div class="row">
+        <iframe class="embed-responsive-item" 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.
+        6052078459647!2d-75.21580428523876!3d-12.070661691451377!2m3!1f0!2
+        f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x910e96455cac6451%3A0xd55
+        3c94242043b04!2sBre%C3%B1a%20527%2C%20Huancayo%2012001!5e0!3m2!1se
+        s!2spe!4v1580563218353!5m2!1ses!2spe"  allowfullscreen=""></iframe>
+    </div>         
+</div>
+
+<div class="container">
+    <h3 class="text-center pb-4 pt-5">
+        Envianos un Mensaje
+    </h3>
+
+    <form [formGroup] ="formContacto" class="wrap-form-reservation size22 m-l-r-auto">
+        <div class="row">
+            <div class="col-md-4">
+                <!-- Name -->
+                <span>Nombre</span>
+                <div class="form-group">
+                    <input formControlName="nombre" type="text" class="form-control" placeholder="Nombre">
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <!-- Email -->
+                <span>Email</span>
+                <div class="form-group">
+                    <input formControlName="email" type="text" class="form-control" placeholder="Email">
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <!-- Phone -->
+                <span>Telefono</span>
+                <div class="form-group">
+                    <input formControlName="celular" type="text" class="form-control" placeholder="Telefono">
+                </div>
+            </div>
+
+            <div class="col-12">
+                <!-- Message -->
+                <span>Mensaje</span>
+                <div class="form-group">
+                    <textarea formControlName="mensaje" class="form-control" id="exampleFormControlTextarea1" placeholder="Escribe un Mensaje" rows="3"></textarea>
+                  </div>
+            </div>
+        </div>
+        <button (click)="enviarComentario()" type="submit" class="btn btn-dark " id="butt">Enviar</button>
+    </form>
+
+
+    <div class="row">
+        <div class="col-sm-8 col-md-4 col-lg-4 m-l-r-auto pt-5">
+                <h4>
+                     <i class="fa fa-map-marker mr-3"></i>
+                       Ubicacion
+                </h4>
+
+                <span class="txt23 size38">
+                    Paseo la Breña N° 527 - Huancayo
+                </span>
+
+
+        </div>
+
+        <div class="col-sm-8 col-md-3 col-lg-4 m-l-r-auto pt-5">
+                <h4>
+                        <i class="fa fa-phone mr-3"></i>
+                    Llamar
+                </h4>
+                    <span class="txt23 size38">
+                        (+51) 964050503
+                    </span>
+        </div>
+
+        <div class="col-sm-8 col-md-5 col-lg-4 m-l-r-auto pt-5">
+                    <h4>
+                        <i class="fa fa-clock-o mr-3"></i>
+                        Horario de Atención
+                    </h4>
+
+                    <span class="txt23 size38">
+                        Tarde: 12:30 PM – 03:30 PM <br>
+                        Noche: 07:15 PM - 11:00 PM
+                            Lunes a Viernes
+                    </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-5 pt-5 pb-5 footer">
+        <div class="container">
+          <div class="row">
+              <div class="col-lg-4 col-xs-12 location">
+                  <h4 class="mt-lg-0 mt-sm-4">Contactenos</h4>
+                  <p class="mb-0"><i class=" fa fa-map-marker mr-3"></i>
+                    Paseo la breña N° 527 - Huancayo</p>
+                  <p class="mb-0"><i class="fa fa-phone mr-3"></i>(+51) 964050503</p>
+                  <p><i class="fa fa-envelope-o mr-3"></i>chifachaufan@gmail.com</p>
+                </div>
+            <div class="col-lg-5 col-xs-12 about-company">
+              <h4>Horario de Atención</h4>
+              <p class="pr-5 text-white-50">Hora de atención: 12:00 PM – 11:00 PM <br> 
+                Lunes a Domingos</p>
+            </div>
+      
+            
+            <div class="col-lg-3 col-xs-12 links">
+      
+              <h4>Siguenos en</h4>
+                <a href="https://web.facebook.com/ChinesseFoodChaufan/"><i class="fab fa-facebook-square mr-2"></i></a>
+                  <a href="https://www.youtube.com/channel/UCytVb-D6TAIle-oLiNQELvQ/"><i class="fab fa-youtube mr-2"></i></a>
+                  <a href="https://web.whatsapp.com/"><i class="fab fa-whatsapp mr-2"></i></a>
+            </div> 
+          </div>
+        </div>
+      </div>
+
+
+

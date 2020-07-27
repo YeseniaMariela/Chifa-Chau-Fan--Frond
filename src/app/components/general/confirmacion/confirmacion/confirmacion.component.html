@@ -1,0 +1,99 @@
+<div class="container">
+    <div class="row p-5">
+        <div class="card" *ngIf="!reserva">
+            Cargando
+        </div>
+        <div class="card" *ngIf="reserva">
+            <div class="card-body">
+                <div class="col-12 text-center">
+                  <strong>¡Tu pedido ha sido reservado!</strong>
+                </div>
+                <div class="col-12">
+                  <p>Hola, {{usuarioLogueado.nombre | titlecase}}, <br>
+                    ¡Gracias por tu pedido! <br>
+                    En estos momento tu reserva ha sido completada. Gracias por elegir nuestra empresa. <br>
+                    <strong>Fecha y Hora de Registro</strong><br>
+                          {{reserva.venta.fecha | date: 'dd/MM/yyyy hh:mm a'}}
+            
+                  </p>
+                </div>
+                <div class="col-12">
+                  <table class="table table-striped table-sm" >
+                    <thead>  
+                      <tr>
+                        <th colspan="2" class="text-uppercase text-danger">Detalle de Reserva</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <strong>Fecha de Reserva:</strong>&nbsp;{{reserva.venta.fecha | date: 'dd/MM/yyyy'}} <br>
+                          <strong>De:</strong>&nbsp;{{reserva.venta.hora}}&nbsp;a&nbsp;{{horaFinal}}
+                       </td>
+                       <ng-container *ngFor="let mesa of mesas" >
+                            <ng-template [ngIf]="mesa.id == reserva.venta.mesaId">    
+                                <td>
+                                    <strong>Mesa</strong><br>
+                                    {{mesa.numeroMesa}}
+                                </td>
+                            </ng-template>
+                        </ng-container>
+                      </tr>
+                      <ng-container *ngFor="let prod of productos">
+                        <tr *ngFor="let proReser of productosReserva">
+                            <ng-template [ngIf]="proReser.productoId === prod.id">
+                                <td >
+                                    <img [src]="prod.imagen" width="60" height="60" alt="">&nbsp;{{prod.nombre | titlecase}} <br>
+                                    Cantidad: {{proReser.cantidad}}
+                                    </td>
+                                    <td class="text-right text-primary">
+                                    {{proReser.precio | number:'1.2-2'}}
+                                </td>
+                            </ng-template>
+                        </tr>
+                      </ng-container>
+                       
+                          
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <td>Sub Total</td>
+                        <td class="text-right text-primary">{{reserva.venta.total | number:'1.2-2'}}</td>
+                      </tr>
+                      <tr>
+                        <td>Descuento</td>
+                        <td class="text-right text-danger">0</td>
+                      </tr>
+                      <tr>
+                        <td>Total</td>
+                        <td class="text-right text-primary">{{reserva.venta.total | number:'1.2-2'}}</td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+                <div class="col-12">
+                  <p>Contactenos <br>
+                    Celular: 964050503 <br>
+                    Correo: chifachaufan@gmail.com
+                  </p>
+                </div>
+                <div class="col-4 offset-4 text-center">
+                  Código QR <br>
+                  <img src="http://206.189.173.158/static/qrs/{{reserva.venta.id}}.png" width="150" height="150" alt="QR Code"> <br>
+                </div>
+                <div class="col-12 text-center">
+                  <p>Lo esperamos en Chifa Chau Fan</p>
+                </div>
+
+                <div class="col-12 text-center text-uppercase text-danger" style="font-weight: bold;">
+                  <p>para poder validar su reserva al momento de ingresar al local necesitamos el codigo QR para validar su reserva y se mejore la atencion.</p>
+                </div>
+
+                <div class="col-12 text-center">
+                  <button class="btn btn-danger" (click)="close()">Salir</button>
+                </div>
+            </div>
+        </div>
+      </div>
+</div>
+

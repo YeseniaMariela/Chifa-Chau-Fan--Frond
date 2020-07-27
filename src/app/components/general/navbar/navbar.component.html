@@ -1,0 +1,239 @@
+<div class="container-fluid">
+    <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light pb-4 pt-4" style="opacity: 0.9;" >
+        <a class="navbar-brand" [routerLink]="['/inicio']">
+          <img  src="assets/logo.png" width="180" height="30" class="d-inline-block align-top" alt="Chifa Chaufan" >
+        </a>
+        <button class="navbar-toggler my-2 my-lg-0" type="button" (click)="toggleState()">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="navbar-collapse" [ngClass]="{ 'collapse': isCollapse }">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active" id="menu" >
+              <a class="nav-link" [routerLink]="['/inicio']">Inicio <span class="sr-only">(current)</span></a>
+            </li>
+            <ng-template [ngIf]="!usuarioLogueado">
+              <li class="nav-item">
+                <a class="nav-link hand" id="menu" (click)="openModal(template) ">Reservar</a>
+              </li>
+            </ng-template>    
+            <ng-template [ngIf]="usuarioLogueado">
+              <li class="nav-item">
+                <a class="nav-link hand" id="menu" [routerLink]="['/reservas']">Reservar</a>
+              </li>
+            </ng-template>
+            <li class="nav-item">
+              <a class="nav-link" id="menu"[routerLink]="['/nosotros']">Sobre Nosotros</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="menu" [routerLink]="['/contactenos']">Contactenos</a>
+            </li>
+          </ul>
+      
+          <ul class="nav navbar-nav navbar-right">
+            <li  class="nav-item">
+              <a class="nav-link" href="https://web.facebook.com/ChinesseFoodChaufan/">
+                <i class="fab fa-facebook-square" ></i> Facebook
+              </a>
+            </li>
+            <li  class="nav-item">
+              <a class="nav-link" href="https://www.youtube.com/channel/UCytVb-D6TAIle-oLiNQELvQ/featured">
+                <i class="fab fa-youtube" aria-hidden="true"></i>YouTube</a>
+            </li>
+            <ng-template [ngIf]="!usuarioLogueado">
+              <li  class="nav-item">
+                <a class="nav-link hand" (click)="openModal(template) ">
+                  <i class="fa fa-user  mr-2" aria-hidden="true"></i>Admin</a>
+              </li>
+            </ng-template>
+            <ng-template [ngIf]="usuarioLogueado"> 
+              <!-- <li  class="nav-item">
+                <a class="nav-link hand" [routerLink]="['/admin']">
+                  <i class="fa fa-user  mr-2" aria-hidden="true"></i>Admin</a>
+              </li> -->
+            </ng-template>
+          </ul>
+      
+      
+          <div class="dropdown" style="margin-right: 30px;">
+            <button class="dropbtn"><i class="fa fa-user-circle"  aria-hidden="true" style="color: black; font-size: 20px;"></i></button>
+            <div class="dropdown-content">
+              <ng-template [ngIf]="!usuarioLogueado">
+                <a class=" hand" (click)="openModal(template)"><i class="fa fa-user  mr-2"></i>Iniciar Sesion</a>
+                <a class=" hand"  (click)="cerrarSesion()" ><i class="fa fa-power-off  mr-2  "></i>Cerrar Sesion</a>
+              </ng-template>
+              <ng-template [ngIf]="usuarioLogueado">            
+                <a class=" hand" [routerLink]="['/reservas']"><i class="fa fa-user  mr-2"></i>{{usuarioLogueado.nombre}} {{usuarioLogueado.apellidos}}</a>
+                <a class=" hand"  (click)="cerrarSesion()" ><i class="fa fa-power-off  mr-2  "></i>Cerrar Sesion</a>
+              </ng-template>      
+            </div>
+          </div>
+        </div>
+      </nav>
+</div>
+
+
+<ng-template #template>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-8 offset-2 text-center" >
+        <h3 class="display-3" style="font-size: 30px;" *ngIf="forgotPassword">Reiniciar contraseña</h3>
+        <div class="btn-group" role="group" aria-label="Basic example" *ngIf="!forgotPassword">
+          <button type="button" class="btn btn-light text-info" [ngClass]="{'active': button.active}" (click)="selectButton(button)" *ngFor="let button of buttons">{{button.title}}</button>
+        </div>
+      </div>
+      <div class="col-2">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="col-12" *ngIf="buttonSelected.id === 'login'">
+        <div class="row">
+          <div class="col-12">
+            <i class="fa fa-3x" [ngClass]="{'fa-signin': !forgotPassword, 'fa-tools': forgotPassword}"></i>
+          </div>
+          <!-- Login -->
+          <div class="col-12 mt-3" *ngIf="!forgotPassword">
+            <form  [formGroup] ="formLogin">
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1"><i class="fa fa-user" aria-hidden="true"></i></span>
+                </div>
+                <input formControlName="usuario" type="text" class="form-control" name="username" placeholder="Nombre de Usuario o Correo Electrónico" aria-label="Username" aria-describedby="basic-addon1" required>
+              </div>
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1"><i class="fa fa-key" aria-hidden="true"></i></span>
+                </div>
+                <input formControlName="contrasenia" type="password" class="form-control" name="password" placeholder="********" aria-label="Username" aria-describedby="basic-addon1" required>
+              </div>
+              <div class="alert mt-3 alert-danger text-center" *ngIf="mostrarMensaje">
+                <i class="fa fa-exclamation-triangle"></i>&nbsp;El Correo o contraseña no existe.
+              </div>
+              <div class="text-right">
+                <span class="text-info hand" (click)="cambiarContrasenia()">¿Olvidaste tu Contraseña?</span>
+              </div>
+              <button class="btn btn-info mt-2 btn-block text-white" [disabled]="formUsuario.invalid" (click)="logueo()">
+                <i class="fa" [ngClass]="{'fa-check': !logining, 'fa-spinner fa-spin': logining}"></i>&nbsp;Iniciar Sesión
+              </button>
+              <hr>
+              <button class="btn btn-primary btn-block text-white" (click)="signInWithGoogle()">
+                Iniciar con tu cuenta de Google
+              </button>
+            </form>
+          </div>
+          <!-- Forgot Password -->
+          <div class="col-12 mt-3" *ngIf="forgotPassword">
+            <div class="alert alert-info">
+              <i class="fa fa-exclamation"></i>&nbsp;Indica los campos seleccionados para reiniciar tu contraseña.
+            </div>
+            <form #forgotPasswordForm="ngForm">
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">
+                      <i class="fa fa-paper-plane"></i>
+                    </span>
+                  </div>
+                  <input type="text" class="form-control" placeholder="micorreo@gmail.com" name="email" [(ngModel)]="forgotPassword.email" required>
+                </div>
+                <p class="text-dark-50">Se te enviara un correo para confirmar el cambio de Contraseña.</p>
+              </div>
+              <div class="form-row">
+                <div class="col-3">
+                  <button class="btn btn-light text-danger" (click)="cancelForgotPassword()">Cancelar</button>
+                </div>
+                <div class="col-9 text-right">
+                  <button class="btn btn-light" (click)="sendConfirmation()">
+                    <i class="fa fa-cog"></i>&nbsp;Reiniciar Contraseña
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-12" *ngIf="buttonSelected.id === 'singup'">
+        <div class="row">
+          <div class="col-12">
+            <i class="fa fa-signin fa-3x"></i>
+          </div>
+          <div class="col-12 mt-2">
+            <form [formGroup] ="formUsuario">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-6">
+                    <input formControlName="nombre" type="text" onKeypress="if (event.keyCode > 32 && event.keyCode < 65) event.returnValue = false;" class="form-control" placeholder="Nombres" name="names" required>
+                  </div>
+                  <div class="col-6">
+                    <input formControlName="apellidos" type="text" onKeypress="if (event.keyCode > 32 && event.keyCode < 65) event.returnValue = false;" class="form-control" placeholder="Apellidos" name="lastnames" required>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group mt-2">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="input-group input-group-lg">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-lg"><i class="fa fa-phone"></i>&nbsp;+ 51</span>
+                      </div>
+                      <input formControlName="numCelular" onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" type="text" class="form-control"  aria-label="phone" name="phone" minlength="9" maxlength="9" placeholder="999 999 999" required>
+                    </div>
+                    <span class="help-text text-info float-right">Ingresa tu Nro de celular o de un familiar cercano</span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row mt-2">
+                <div class="col-7">
+                  <div class="input-group">
+                    <!-- pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/" -->
+                    <input formControlName="email"  (change)="busquedaCorreo($event.target.value)"type="email" class="form-control" pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" placeholder="Correo Electrónico" name="email"  required>
+                    <div class="input-group-append" *ngIf="emailExiste">
+                      <span class="input-group-text" id="basic-addon2" title="Correo Electronico ya registrado.">
+                        <i class="fa fa-times text-danger"></i>
+                      </span>
+                    </div>
+                  </div>
+                  <small class="help-text text-danger"  *ngIf="emailExiste" >Este correo ya existe.</small>
+                  <small class="help-text text-danger"  *ngIf="emailValido" >Este correo no es válido.</small>
+
+                </div>
+                <div class="col-5">
+                  <div class="input-group">
+                    <input formControlName="usuario" (blur)="busquedaUsuario($event.target.value)" type="text" class="form-control" placeholder="Nombre de Usuario" name="username" required>
+                    <div class="input-group-append" *ngIf="UsuarioExiste">
+                      <span class="input-group-text" id="basic-addon2" title="Nombre de Usuario ya registrado.">
+                        <i class="fa fa-times text-danger"></i>
+                      </span><br>
+                    </div>
+                    
+                  </div>
+                  <small class="help-text text-danger" *ngIf="UsuarioExiste">Usuario ya existe</small>
+                </div>
+              </div>
+
+              <div class="form-group mt-2">
+                <div class="row">
+                  <div class="col-6">
+                    <label for="password">Contraseña</label>
+                    <input formControlName="contrasenia" type="password" class="form-control" placeholder="********" name="password"  required>
+                  </div>
+                  <div class="col-6">
+                    <label for="confirmPassword">Confirmar Contraseña</label>
+                    <input formControlName="contraseniaConfirmar" type="password" class="form-control" placeholder="********" name="password" required>
+                    <span class="help-text text-danger" *ngIf="valContrasenia === false">Las contraseñas no coinciden.</span>
+                  </div>
+                </div>
+              </div>            
+            </form>
+          </div>
+          <div class="col-6 offset-3">
+            <button class="btn btn-primary btn-block text-white" [disabled]="!formUsuario.valid" (click)="confirmarContrasenia ()">
+              Registrarse
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
